@@ -1,4 +1,38 @@
-export type Pokemon = {
+export type PokemonType =
+  | "normal"
+  | "fighting"
+  | "flying"
+  | "poison"
+  | "ground"
+  | "rock"
+  | "bug"
+  | "ghost"
+  | "steel"
+  | "fire"
+  | "water"
+  | "grass"
+  | "electric"
+  | "psychic"
+  | "ice"
+  | "dragon"
+  | "dark"
+  | "fairy"
+  | "unknown"
+  | "shadow";
+
+export type Color =
+  | "black"
+  | "blue"
+  | "brown"
+  | "gray"
+  | "green"
+  | "pink"
+  | "purple"
+  | "red"
+  | "white"
+  | "yellow";
+
+export type PokemonVariety = {
   id: number;
 
   name: string;
@@ -72,6 +106,49 @@ export type Pokemon = {
   // A list of details showing types this Pokémon has.
   types: {
     slot: number;
-    type: { name: string; url: string };
+    type: { name: PokemonType; url: string };
   }[];
+};
+
+export type PokemonSpecie = {
+  color: {
+    name: Color;
+    url: string;
+  };
+  evolves_from_species: { name: string; url: string };
+  flavor_text_entries: {
+    flavor_text: string;
+    language: Language;
+    version: {
+      name: any;
+      url: string;
+    };
+  }[];
+  genera: {
+    genus: string;
+    language: Language;
+  }[];
+  habitat: {
+    name: string;
+    url: string;
+  };
+  name: string;
+  names: {
+    language: Language;
+    name: string;
+  };
+  varieties: [
+    {
+      is_default: boolean;
+      pokemon: {
+        name: string;
+        url: string;
+      };
+    }
+  ];
+};
+
+type Language = {
+  name: "en" | string;
+  url: string;
 };

@@ -14,3 +14,4 @@ jobs:
       - uses: bahmutov/npm-install@v1.6.2
       - run: yarn type
       - run: yarn lint
+      - run: yarn build:pages

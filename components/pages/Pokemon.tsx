@@ -1,7 +1,8 @@
 import React from "react";
 import { AmpImg } from "react-amphtml";
 // import { styled } from "@linaria/react";
-import type { Pokemon } from "../../builder/pokeapi/types";
+import type { Pokemon } from "../../builder/pokeapi";
+import { Link } from "../Link";
 
 export const Page = ({ pokemon }: { pokemon: Pokemon }) => {
   return (
@@ -12,8 +13,26 @@ export const Page = ({ pokemon }: { pokemon: Pokemon }) => {
         specName="default"
         width={300}
         height={300}
-        src={pokemon.sprites.front_default}
+        src={pokemon.imageUrl}
         style={{ imageRendering: "pixelated" }}
+      />
+      <h3>{pokemon.genus}</h3>
+      <p>{pokemon.flavorText}</p>
+
+      {pokemon.ancestor && (
+        <p>
+          <span>evolves from </span>
+          <Link href={`/pokemon/${pokemon.ancestor}`}>{pokemon.ancestor}</Link>
+        </p>
+      )}
+
+      <div
+        style={{
+          width: "50px",
+          height: "50px",
+          borderRadius: "25px",
+          backgroundColor: pokemon.color,
+        }}
       />
     </div>
   );

@@ -10,7 +10,10 @@ fs.mkdirSync(cacheDir, { recursive: true });
 const limit = pLimit(2);
 
 const get = async (url: string) => {
-  const cacheFilename = path.join(cacheDir, slugify(url));
+  const cacheFilename = path.join(
+    cacheDir,
+    url.replace("https://", "").replace(/\W/g, "-") + ".json"
+  );
 
   if (fs.existsSync(cacheFilename))
     return JSON.parse(fs.readFileSync(cacheFilename).toString());

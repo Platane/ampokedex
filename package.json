@@ -29,6 +29,6 @@
   "scripts": {
     "type": "tsc --noEmit",
     "lint": "yarn prettier -c '**/*.{ts,tsx,js,jsx,json,md}' '!{build,.cache}/**'",
-    "build:pages": "ts-node builder/index.ts"
+    "build:pages": "ts-node builder/index.tsx"
   }
 }

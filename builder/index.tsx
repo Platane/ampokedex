@@ -6,6 +6,7 @@ import * as fs from "fs";
 import slugify from "slugify";
 import { Page } from "../components/pages/Pokemon";
 import { Html } from "../components/Html/Html";
+import { Provider as LinkProvider } from "../components/Link";
 
 (async () => {
   const outDir = path.join(__dirname, "../build");
@@ -21,10 +22,12 @@ import { Html } from "../components/Html/Html";
 
     fs.mkdirSync(path.dirname(filename), { recursive: true });
 
-    const element = React.createElement(
-      Html,
-      {} as any,
-      React.createElement(Page, { pokemon }, null)
+    const element = (
+      <LinkProvider baseUrl={"file://" + outDir}>
+        <Html>
+          <Page pokemon={pokemon} />
+        </Html>
+      </LinkProvider>
     );
 
     const w = fs.createWriteStream(filename);
