@@ -1,5 +1,5 @@
 import React from "react";
-import { renderToStaticNodeStream } from "react-dom/server";
+import { renderToStaticMarkup } from "react-dom/server";
 import { getAll } from "./pokeapi";
 import * as path from "path";
 import * as fs from "fs";
@@ -8,12 +8,25 @@ import { Page } from "../components/pages/Pokemon";
 import { Html } from "../components/Html/Html";
 import { Provider as LinkProvider } from "../components/Link";
 
+// @ts-ignore
+import AmpOptimizer from "@ampproject/toolbox-optimizer";
+
+const ampOptimizer = AmpOptimizer.create();
+
+const originalHtml = `
+<!doctype html>
+<html ⚡>
+  ...
+</html>`;
+
 (async () => {
   const outDir = path.join(__dirname, "../build");
 
   const r = getAll();
 
-  r.on("data", (pokemon) => {
+  const pokemons = await r.promise;
+
+  for (const pokemon of pokemons) {
     const filename = path.join(
       outDir,
       "pokemon",
@@ -30,11 +43,9 @@ import { Provider as LinkProvider } from "../components/Link";
       </LinkProvider>
     );
 
-    const w = fs.createWriteStream(filename);
-    w.write("<!DOCTYPE HTML>");
-
-    renderToStaticNodeStream(element).pipe(w);
-  });
-
-  return r.promise;
+    const content = "<!DOCTYPE HTML>" + renderToStaticMarkup(element);
+    ampOptimizer.transformHtml(content).then((optimizedHtml: any) => {
+      fs.writeFileSync(filename, optimizedHtml);
+    });
+  }
 })().catch(console.error);

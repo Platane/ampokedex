@@ -89,7 +89,7 @@ export type PokemonVariety = {
       | "generation-vi"
       | "generation-vii"
       | "generation-viii",
-      Record<string, string>
+      Record<string, any>
     >;
   };
 

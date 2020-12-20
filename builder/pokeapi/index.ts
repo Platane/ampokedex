@@ -21,6 +21,8 @@ export const getAll = () => {
       const pokemon = formatPokemon(specie, variety);
 
       ee.emit("data", pokemon);
+
+      return pokemon;
     })
   ).then((x) => {
     ee.emit("end");
@@ -39,6 +41,9 @@ const formatPokemon = (specie: PokemonSpecie, variety: PokemonVariety) => ({
     .find((f) => f.language.name === "en")
     ?.flavor_text?.replace(/\s+/g, " "),
   imageUrl: variety.sprites.front_default,
+  // imageUrl:
+  //   variety.sprites.versions["generation-vii"]["ultra-sun-ultra-moon"]
+  //     .front_default,
   type: variety.types.map((t) => t.type.name),
   habitat: specie.habitat.name,
 });
