@@ -16,7 +16,7 @@
     "react-amphtml": "4.0.2",
     "react-dom": "17.0.1",
     "slugify": "1.4.6",
-    "@ampproject/toolbox-optimizer":"2.7.3"
+    "@ampproject/toolbox-optimizer": "2.7.3"
   },
   "devDependencies": {
     "@types/node": "14.14.14",
