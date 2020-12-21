@@ -1,4 +1,4 @@
-import { EventEmitter } from "events";
+import slugify from "slugify";
 import get from "./cached-fetch";
 import type { PokemonVariety, PokemonSpecie } from "./types";
 
@@ -8,34 +8,27 @@ const getPokemonVarietyById = (id: string | number): Promise<PokemonVariety> =>
 const getPokemonSpecieById = (id: string | number): Promise<PokemonSpecie> =>
   get(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
 
-export const getAll = () => {
-  const ee = new EventEmitter();
-
-  const promise = Promise.all(
-    Array.from({ length: 3 }).map(async (_, id) => {
+export const getAll = () =>
+  Promise.all(
+    Array.from({ length: 10 }).map(async (_, id) => {
       const specie = await getPokemonSpecieById(id + 1);
       const variety = await getPokemonVarietyById(
         specie.varieties.find((v) => v.is_default)!.pokemon.name
       );
 
-      const pokemon = formatPokemon(specie, variety);
-
-      ee.emit("data", pokemon);
-
-      return pokemon;
+      return formatPokemon(specie, variety);
     })
-  ).then((x) => {
-    ee.emit("end");
-    return x;
-  });
-
-  return { promise, on: ee.on.bind(ee) };
-};
+  );
 
 const formatPokemon = (specie: PokemonSpecie, variety: PokemonVariety) => ({
+  id: slugify(variety.name),
   name: variety.name,
   color: specie.color.name,
-  ancestor: specie.evolves_from_species?.name,
+  height: variety.height,
+  weight: variety.weight,
+  ancestorId:
+    specie.evolves_from_species?.name &&
+    slugify(specie.evolves_from_species?.name),
   genus: specie.genera.find((g) => g.language.name === "en")?.genus,
   flavorText: specie.flavor_text_entries
     .find((f) => f.language.name === "en")
@@ -44,7 +37,7 @@ const formatPokemon = (specie: PokemonSpecie, variety: PokemonVariety) => ({
   // imageUrl:
   //   variety.sprites.versions["generation-vii"]["ultra-sun-ultra-moon"]
   //     .front_default,
-  type: variety.types.map((t) => t.type.name),
+  types: variety.types.map((t) => t.type.name),
   habitat: specie.habitat.name,
 });
 

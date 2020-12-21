@@ -12,10 +12,26 @@ export const Provider = ({
 
 export const useBaseUrl = () => useContext(context);
 
-export const Link = ({ href, children }: { href: string; children: any }) => {
+export const Link = ({
+  href,
+  children,
+  ...props
+}: {
+  href: string;
+  children: any;
+  style?: any;
+}) => {
   const baseUrl = useBaseUrl();
 
-  const h = baseUrl + href + ".html";
+  href = baseUrl + href;
 
-  return <a href={h}>{children}</a>;
+  if (href[href.length - 1] === "/") href += "index";
+
+  href += ".html";
+
+  return (
+    <a {...props} href={href}>
+      {children}
+    </a>
+  );
 };
