@@ -3,7 +3,7 @@ name: test
 on: [push]
 
 jobs:
-  test:
+  main:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +17,14 @@ jobs:
       - name: cache request
         uses: actions/cache@v2
         with:
-        path: |
-          .cache
-        key: static
+          path: |
+            .cache
+          key: static
       - run: yarn build:pages
+      - uses: crazy-max/ghaction-github-pages@v2
+        if: success() && github.ref == 'refs/heads/master'
+        with:
+          target_branch: gh-pages
+          build_dir: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN_GH_PAGES }}
