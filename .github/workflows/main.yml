@@ -19,7 +19,7 @@ jobs:
         with:
           path: |
             .cache
-          key: static
+          key: ${{ hashFiles('builder/pokeapi/**') }}
       - run: ls .cache
       - run: yarn build:pages
       - uses: crazy-max/ghaction-github-pages@v2

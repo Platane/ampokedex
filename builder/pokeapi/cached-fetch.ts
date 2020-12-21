@@ -1,13 +1,12 @@
 import fetch from "node-fetch";
 import * as path from "path";
 import * as fs from "fs";
-import slugify from "slugify";
 import pLimit from "p-limit";
 
 const cacheDir = path.join(__dirname, "../../.cache");
 fs.mkdirSync(cacheDir, { recursive: true });
 
-const limit = pLimit(2);
+const limit = pLimit(1);
 
 const get = async (url: string) => {
   const cacheFilename = path.join(
