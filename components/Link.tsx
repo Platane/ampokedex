@@ -25,9 +25,9 @@ export const Link = ({
 
   href = baseUrl + href;
 
-  if (href[href.length - 1] === "/") href += "index";
+  // if (href[href.length - 1] === "/") href += "index";
 
-  href += ".html";
+  // href += ".html";
 
   return (
     <a {...props} href={href}>

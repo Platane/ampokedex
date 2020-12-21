@@ -57,13 +57,4 @@ export const Page = ({
       <Link href={`/`}>home</Link>
     </div>
   );
-
-  //   return (
-  //     <Container>
-  //       <Title>{pokemon.name}</Title>
-  //     </Container>
-  //   );
 };
-
-// const Title = styled.h1``;
-// const Container = styled.div``;

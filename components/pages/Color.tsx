@@ -1,6 +1,7 @@
 import React from "react";
 import { AmpImg } from "react-amphtml";
 import { Link } from "../Link";
+import styled from "@emotion/styled";
 import type { Pokemon } from "../../builder/pokeapi";
 import type { Color } from "../../builder/pokeapi/types";
 
@@ -14,14 +15,7 @@ export const Page = ({
   <div>
     <h1>{color}</h1>
 
-    <div
-      style={{
-        width: "50px",
-        height: "50px",
-        borderRadius: "25px",
-        backgroundColor: color,
-      }}
-    />
+    <Dot style={{ backgroundColor: color }} />
 
     {pokemons.map((pokemon) => (
       <Link key={pokemon.id} href={`/pokemon/${pokemon.id}`}>
@@ -38,3 +32,9 @@ export const Page = ({
     ))}
   </div>
 );
+
+const Dot = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+`;

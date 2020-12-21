@@ -10,7 +10,7 @@ const getPokemonSpecieById = (id: string | number): Promise<PokemonSpecie> =>
 
 export const getAll = () =>
   Promise.all(
-    Array.from({ length: 50 }).map(async (_, id) => {
+    Array.from({ length: 151 }).map(async (_, id) => {
       const specie = await getPokemonSpecieById(id + 1);
       const variety = await getPokemonVarietyById(
         specie.varieties.find((v) => v.is_default)!.pokemon.name
@@ -24,8 +24,8 @@ const formatPokemon = (specie: PokemonSpecie, variety: PokemonVariety) => ({
   id: slugify(variety.name),
   name: variety.name,
   color: specie.color.name,
-  height: variety.height,
-  weight: variety.weight,
+  height: variety.height * 10,
+  weight: variety.weight / 10,
   ancestorId:
     specie.evolves_from_species?.name &&
     slugify(specie.evolves_from_species?.name),

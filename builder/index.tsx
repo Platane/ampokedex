@@ -26,7 +26,7 @@ const generatePage = (Page: any, props: any, pageName: string) => {
   fs.mkdirSync(path.dirname(filename), { recursive: true });
 
   const element = (
-    <LinkProvider baseUrl={"file://" + outDir}>
+    <LinkProvider baseUrl={""}>
       <Html>
         <Page {...props} />
       </Html>
