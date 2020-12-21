@@ -20,6 +20,7 @@ jobs:
           path: |
             .cache
           key: static
+      - run: ls .cache
       - run: yarn build:pages
       - uses: crazy-max/ghaction-github-pages@v2
         if: success() && github.ref == 'refs/heads/master'
