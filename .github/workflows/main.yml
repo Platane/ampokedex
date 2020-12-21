@@ -20,7 +20,7 @@ jobs:
           path: |
             .cache
           key: ${{ hashFiles('builder/pokeapi/**') }}
-      - run: ls .cache
+      - run: ls .cache || echo 1
       - run: yarn build:pages
       - uses: crazy-max/ghaction-github-pages@v2
         if: success() && github.ref == 'refs/heads/master'
