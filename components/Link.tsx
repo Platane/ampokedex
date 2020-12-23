@@ -12,6 +12,8 @@ export const Provider = ({
 
 export const useBaseUrl = () => useContext(context);
 
+export const BaseUrlConsumer = context.Consumer;
+
 export const Link = ({
   href,
   children,

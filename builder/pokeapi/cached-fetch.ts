@@ -18,7 +18,8 @@ const get = async (url: string) => {
     return JSON.parse(fs.readFileSync(cacheFilename).toString());
 
   return limit(() =>
-    fetch(url)
+    wait(200)
+      .then(() => fetch(url))
       .then((res) => res.json())
       .then((x) => {
         fs.writeFileSync(cacheFilename, JSON.stringify(x));
@@ -26,5 +27,8 @@ const get = async (url: string) => {
       })
   );
 };
+
+const wait = (delay = 0) =>
+  new Promise((resolve) => setTimeout(resolve, delay));
 
 export default get;

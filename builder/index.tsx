@@ -1,6 +1,7 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { getAll, Pokemon } from "./pokeapi";
+import { extractCritical, renderStylesToString } from "@emotion/server";
 import * as path from "path";
 import * as fs from "fs";
 import { Html } from "../components/Html/Html";
@@ -18,9 +19,7 @@ const ampOptimizer = AmpOptimizer.create();
 
 const outDir = path.join(__dirname, "../build");
 
-const generatePage = (Page: any, props: any, pageName: string) => {
-  console.log(pageName);
-
+const generatePage = async (Page: any, props: any, pageName: string) => {
   const filename = path.join(outDir, pageName + ".html");
 
   fs.mkdirSync(path.dirname(filename), { recursive: true });
@@ -33,12 +32,13 @@ const generatePage = (Page: any, props: any, pageName: string) => {
     </LinkProvider>
   );
 
-  const content = "<!DOCTYPE HTML>" + renderToStaticMarkup(element);
-  ampOptimizer
-    .transformHtml(content, { canonical: "https://a" })
-    .then((optimizedHtml: any) => {
-      fs.writeFileSync(filename, optimizedHtml);
-    });
+  let content = "<!DOCTYPE HTML>" + renderToStaticMarkup(element);
+
+  // content = await ampOptimizer.transformHtml(content, {
+  //   canonical: "https://a",
+  // });
+
+  fs.writeFileSync(filename, content);
 };
 
 (async () => {
