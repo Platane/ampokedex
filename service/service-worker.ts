@@ -2,11 +2,16 @@ import { createHandlerBoundToURL, precacheAndRoute } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { CacheFirst } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
+import { CacheableResponsePlugin } from "workbox-cacheable-response";
 
 /**
  * pre cache
  */
-precacheAndRoute(["/app-shell.html", "/app-shell.js"]);
+precacheAndRoute([
+  "/app-shell.html",
+  "/app-shell.js",
+  "https://cdn.ampproject.org/shadow-v0.js",
+]);
 
 /**
  * upon navigation, serve the pwa shell instead
@@ -24,7 +29,6 @@ registerRoute(
     cacheName: "content-cache",
     plugins: [
       new ExpirationPlugin({
-        maxAgeSeconds: 100 * 24 * 60 * 60,
         maxEntries: 100,
       }),
     ],
@@ -34,19 +38,21 @@ registerRoute(
 /**
  * cache images
  */
-//https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/249.png
 registerRoute(
-  ({ url }) => {
-    console.log(url);
-    return false;
-  },
+  ({ url: { href }, request }) =>
+    request.destination === "image" &&
+    href.startsWith(
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites"
+    ),
 
   new CacheFirst({
-    cacheName: "content-cache",
+    cacheName: "image-cache",
     plugins: [
       new ExpirationPlugin({
-        maxAgeSeconds: 100 * 24 * 60 * 60,
-        maxEntries: 300,
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
       }),
     ],
   })

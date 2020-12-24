@@ -1,20 +1,19 @@
-import * as path from "path";
 import typescript from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import { terser } from "rollup-plugin-terser";
-import injectProcessEnv from "rollup-plugin-inject-process-env";
+import replace from "rollup-plugin-replace";
 
 export default {
   plugins: [
     //
     commonjs(),
     resolve(),
-    injectProcessEnv({
-      NODE_ENV: "production",
+    replace({
+      "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     typescript(),
-    terser(),
+    // terser(),
   ],
   output: {
     dir: "build",

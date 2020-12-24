@@ -1,7 +1,6 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { getAll, Pokemon } from "./pokeapi";
-import { extractCritical, renderStylesToString } from "@emotion/server";
 import * as path from "path";
 import * as fs from "fs";
 import { Html } from "../components/Html/Html";
@@ -19,14 +18,20 @@ const ampOptimizer = AmpOptimizer.create();
 
 const outDir = path.join(__dirname, "../build");
 
-const generatePage = async (Page: any, props: any, pageName: string) => {
+const baseUrl = "";
+
+const generatePage = async (
+  Page: any,
+  { amp, scriptSources, ...props }: any,
+  pageName: string
+) => {
   const filename = path.join(outDir, pageName + ".html");
 
   fs.mkdirSync(path.dirname(filename), { recursive: true });
 
   const element = (
-    <LinkProvider baseUrl={""}>
-      <Html>
+    <LinkProvider baseUrl={baseUrl}>
+      <Html amp={amp} scriptSources={scriptSources}>
         <Page {...props} />
       </Html>
     </LinkProvider>
@@ -34,9 +39,10 @@ const generatePage = async (Page: any, props: any, pageName: string) => {
 
   let content = "<!DOCTYPE HTML>" + renderToStaticMarkup(element);
 
-  // content = await ampOptimizer.transformHtml(content, {
-  //   canonical: "https://a",
-  // });
+  if (amp)
+    content = await ampOptimizer.transformHtml(content, {
+      canonical: "https://a",
+    });
 
   fs.writeFileSync(filename, content);
 };
@@ -64,19 +70,28 @@ const generatePage = async (Page: any, props: any, pageName: string) => {
   }
 
   //
+  generatePage(
+    () => null,
+    { scriptSources: [baseUrl + "/app-shell.js"] },
+    `app-shell`
+  );
 
-  generatePage(PageIndex, { pokemons, pokemonByColor, pokemonByType }, `index`);
+  generatePage(
+    PageIndex,
+    { amp: true, pokemons, pokemonByColor, pokemonByType },
+    `index`
+  );
 
   for (const pokemon of pokemons)
     generatePage(
       PagePokemon,
-      { pokemon, pokemonById, pokemonByColor, pokemonByType },
+      { amp: true, pokemon, pokemonById, pokemonByColor, pokemonByType },
       `pokemon/${pokemon.id}`
     );
 
   for (const [color, pokemons] of Object.entries(pokemonByColor))
-    generatePage(PageColor, { color, pokemons }, `color/${color}`);
+    generatePage(PageColor, { amp: true, color, pokemons }, `color/${color}`);
 
   for (const [type, pokemons] of Object.entries(pokemonByType))
-    generatePage(PageType, { type, pokemons }, `type/${type}`);
+    generatePage(PageType, { amp: true, type, pokemons }, `type/${type}`);
 })().catch(console.error);

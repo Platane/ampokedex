@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es2020",
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
