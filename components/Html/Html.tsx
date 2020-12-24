@@ -15,6 +15,13 @@ export const Html = ({ children }: Props) => (
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta charSet="utf-8" />
       <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+      <script
+        key="amp-container"
+        async
+        custom-element="amp-install-serviceworker"
+        src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"
+      />
       <BaseUrlConsumer>
         {(baseUrl) => (
           <AmpInstallServiceworker
@@ -26,15 +33,6 @@ export const Html = ({ children }: Props) => (
       </BaseUrlConsumer>
     </head>
 
-    <body>
-      {children}
-
-      <script
-        key="amp-container"
-        async
-        custom-element="amp-install-serviceworker"
-        src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"
-      />
-    </body>
+    <body>{children}</body>
   </html>
 );
