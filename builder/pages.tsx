@@ -27,7 +27,7 @@ const generatePage = async (Page: any, props: any, pageName: string) => {
 
   const element = (
     <LinkProvider baseUrl={baseUrl}>
-      <Html amp>
+      <Html>
         <Page {...props} />
       </Html>
     </LinkProvider>
