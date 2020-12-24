@@ -58,8 +58,8 @@ const extractStyle = (html: string) => {
   );
 
   return h.replace(
-    "</head>",
-    (h) => `<style amp-custom>${css.join("")}</style>` + h
+    "<head>",
+    (h) => h + `<style amp-custom>${css.join("")}</style>`
   );
 };
 
