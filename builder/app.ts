@@ -61,7 +61,10 @@ fs.mkdirSync(outDir, { recursive: true });
         commonjs(),
         resolve(),
         replace({
-          "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+          "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || ""),
+          "process.env.APP_BASE_URL": JSON.stringify(
+            process.env.APP_BASE_URL || ""
+          ),
           "process.env.APP_SHELL_REVISION": JSON.stringify(appShellRevision),
         }),
         typescript(),
