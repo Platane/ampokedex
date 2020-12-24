@@ -32,10 +32,10 @@ fs.mkdirSync(outDir, { recursive: true });
       '<html lang="en">',
       "<head>",
       '<meta charset="utf-8">',
-      '<meta name="viewport" content="width=device-width, initial-scale=1" />',
+      '<meta name="viewport" content="width=device-width, initial-scale=1">',
       "</head>",
-      "<body>",
-      '<script src="https://cdn.ampproject.org/shadow-v0.js" />',
+      '<body margin="0">',
+      '<script src="https://cdn.ampproject.org/shadow-v0.js" ></script>',
       "<script>",
       ...output.map((o) => {
         if (o.type === "chunk") return o.code;
