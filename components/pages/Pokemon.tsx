@@ -1,5 +1,6 @@
 import React from "react";
 import { AmpImg } from "react-amphtml";
+import styled from "@emotion/styled";
 import { Link } from "../Link";
 import type { Pokemon } from "../../builder/pokeapi";
 
@@ -13,7 +14,7 @@ export const Page = ({
   const ancestor = pokemonById[pokemon.ancestorId];
 
   return (
-    <div>
+    <Container>
       <h1>{pokemon.name}</h1>
       <AmpImg
         alt="pokemon sprite"
@@ -55,6 +56,10 @@ export const Page = ({
       </ul>
 
       <Link href={`/`}>home</Link>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: block;
+`;

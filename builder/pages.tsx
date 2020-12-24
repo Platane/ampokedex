@@ -12,7 +12,7 @@ import { Page as PageType } from "../components/pages/Type";
 
 // @ts-ignore
 import AmpOptimizer from "@ampproject/toolbox-optimizer";
-import { Color, PokemonType } from "./pokeapi/types";
+import type { Color, PokemonType } from "./pokeapi/types";
 
 const ampOptimizer = AmpOptimizer.create();
 
@@ -35,11 +35,28 @@ const generatePage = async (Page: any, props: any, pageName: string) => {
 
   let content = "<!DOCTYPE HTML>" + renderToStaticMarkup(element);
 
-  content = await ampOptimizer.transformHtml(content, {
-    canonical: "https://a",
-  });
+  content = extractStyle(content);
+
+  if (false)
+    content = await ampOptimizer.transformHtml(content, {
+      canonical: "https://a",
+    });
 
   fs.writeFileSync(filename, content);
+};
+
+const extractStyle = (html: string) => {
+  const css: string[] = [];
+
+  const h = html.replace(
+    /<\s*style[^>]*>(((?!<\/style).)*)<\/style\s*>/g,
+    (_, inside) => {
+      css.push(inside);
+      return "";
+    }
+  );
+
+  return h.replace("</head>", (h) => `<style>${css.join("")}</style>` + h);
 };
 
 (async () => {
