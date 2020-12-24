@@ -18,7 +18,9 @@ precacheAndRoute([
 /**
  * upon navigation, serve the pwa shell instead
  */
-const handler = createHandlerBoundToURL("/app-shell.html");
+const handler = createHandlerBoundToURL(
+  process.env.APP_BASE_URL + "/app-shell.html"
+);
 registerRoute(({ event }) => event.request.mode === "navigate", handler);
 
 /**
