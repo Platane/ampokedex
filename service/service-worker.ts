@@ -8,9 +8,8 @@ import { CacheableResponsePlugin } from "workbox-cacheable-response";
  * pre cache
  */
 precacheAndRoute([
-  "/app-shell.html",
-  "/app-shell.js",
-  "https://cdn.ampproject.org/shadow-v0.js",
+  { url: "/app-shell.html", revision: process.env.APP_SHELL_REVISION },
+  { url: "https://cdn.ampproject.org/shadow-v0.js" },
 ]);
 
 /**

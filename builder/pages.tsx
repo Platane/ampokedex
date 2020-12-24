@@ -18,20 +18,16 @@ const ampOptimizer = AmpOptimizer.create();
 
 const outDir = path.join(__dirname, "../build");
 
-const baseUrl = "";
+const baseUrl = process.env.APP_BASE_URL || "";
 
-const generatePage = async (
-  Page: any,
-  { amp, scriptSources, ...props }: any,
-  pageName: string
-) => {
+const generatePage = async (Page: any, props: any, pageName: string) => {
   const filename = path.join(outDir, pageName + ".html");
 
   fs.mkdirSync(path.dirname(filename), { recursive: true });
 
   const element = (
     <LinkProvider baseUrl={baseUrl}>
-      <Html amp={amp} scriptSources={scriptSources}>
+      <Html amp>
         <Page {...props} />
       </Html>
     </LinkProvider>
@@ -39,10 +35,9 @@ const generatePage = async (
 
   let content = "<!DOCTYPE HTML>" + renderToStaticMarkup(element);
 
-  if (amp)
-    content = await ampOptimizer.transformHtml(content, {
-      canonical: "https://a",
-    });
+  content = await ampOptimizer.transformHtml(content, {
+    canonical: "https://a",
+  });
 
   fs.writeFileSync(filename, content);
 };
@@ -70,28 +65,19 @@ const generatePage = async (
   }
 
   //
-  generatePage(
-    () => null,
-    { scriptSources: [baseUrl + "/app-shell.js"] },
-    `app-shell`
-  );
 
-  generatePage(
-    PageIndex,
-    { amp: true, pokemons, pokemonByColor, pokemonByType },
-    `index`
-  );
+  generatePage(PageIndex, { pokemons, pokemonByColor, pokemonByType }, `index`);
 
   for (const pokemon of pokemons)
     generatePage(
       PagePokemon,
-      { amp: true, pokemon, pokemonById, pokemonByColor, pokemonByType },
+      { pokemon, pokemonById, pokemonByColor, pokemonByType },
       `pokemon/${pokemon.id}`
     );
 
   for (const [color, pokemons] of Object.entries(pokemonByColor))
-    generatePage(PageColor, { amp: true, color, pokemons }, `color/${color}`);
+    generatePage(PageColor, { color, pokemons }, `color/${color}`);
 
   for (const [type, pokemons] of Object.entries(pokemonByType))
-    generatePage(PageType, { amp: true, type, pokemons }, `type/${type}`);
+    generatePage(PageType, { type, pokemons }, `type/${type}`);
 })().catch(console.error);

@@ -14,6 +14,7 @@ jobs:
       - uses: bahmutov/npm-install@v1
       - run: yarn type
       - run: yarn lint
+
       - name: cache request
         uses: actions/cache@v2
         with:
@@ -21,7 +22,12 @@ jobs:
             .cache
           key: ${{ hashFiles('builder/pokeapi/**') }}
       - run: ls .cache || echo 1
-      - run: yarn build:pages
+
+      - run: yarn build
+        env:
+          NODE_ENV: production
+          APP_BASE_URL: /ampokedex
+
       - uses: crazy-max/ghaction-github-pages@v2
         if: success() && github.ref == 'refs/heads/master'
         with:

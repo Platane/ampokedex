@@ -47,7 +47,7 @@
   "scripts": {
     "type": "tsc --noEmit",
     "lint": "prettier -c '**/*.{ts,tsx,js,jsx,json,md}' '!{build,.cache}/**'",
-    "build": "rollup --config ./rollup.config.ts --input app-shell/app-shell.ts ; rollup --config ./rollup.config.ts --input service/service-worker.ts ; ts-node builder/index.tsx",
+    "build": "ts-node builder/pages.tsx ; ts-node builder/app.ts",
     "serve": "serve build"
   }
 }
