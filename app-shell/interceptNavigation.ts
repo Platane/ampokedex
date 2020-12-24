@@ -1,7 +1,7 @@
 // intercept click on anchor
 export const interceptNavigation = (
   container: HTMLElement,
-  onNavigate?: (href: string) => void
+  onNavigate?: (href: string, a: HTMLAnchorElement) => void
 ) => {
   const onClick = (event: any) => {
     if (event.ctrlKey || event.shiftKey) return;
@@ -19,7 +19,7 @@ export const interceptNavigation = (
 
       if (origin === window.location.origin) {
         event.preventDefault();
-        onNavigate?.(href);
+        onNavigate?.(href, a);
       }
     }
   };

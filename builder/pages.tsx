@@ -19,6 +19,7 @@ const ampOptimizer = AmpOptimizer.create();
 const outDir = path.join(__dirname, "../build");
 
 const baseUrl = process.env.APP_BASE_URL || "";
+const origin = "https://platane.github.io";
 
 const generatePage = async (Page: any, props: any, pageName: string) => {
   const filename = path.join(outDir, pageName + ".html");
@@ -39,7 +40,7 @@ const generatePage = async (Page: any, props: any, pageName: string) => {
 
   if (false)
     content = await ampOptimizer.transformHtml(content, {
-      canonical: "https://a",
+      canonical: origin + baseUrl + pageName,
     });
 
   fs.writeFileSync(filename, content);
@@ -56,7 +57,10 @@ const extractStyle = (html: string) => {
     }
   );
 
-  return h.replace("</head>", (h) => `<style>${css.join("")}</style>` + h);
+  return h.replace(
+    "</head>",
+    (h) => `<style amp-custom>${css.join("")}</style>` + h
+  );
 };
 
 (async () => {
