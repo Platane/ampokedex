@@ -18,11 +18,10 @@ jobs:
       - name: cache request
         uses: actions/cache@v2
         with:
-          path: |
-            .cache
-          key: ${{ hashFiles('builder/pokeapi/**') }}
+          path: .cache
+          key: cache--${{ hashFiles('builder/pokeapi/**') }}
+          restore-keys: cache--
       - run: ls .cache || echo 1
-
       - run: yarn build
         env:
           NODE_ENV: production
