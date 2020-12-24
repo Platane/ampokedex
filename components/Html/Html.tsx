@@ -33,6 +33,6 @@ export const Html = ({ children }: Props) => (
       </BaseUrlConsumer>
     </head>
 
-    <body>{children}</body>
+    <body style={{ margin: 0 }}>{children}</body>
   </html>
 );

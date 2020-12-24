@@ -10,7 +10,7 @@ const getPokemonSpecieById = (id: string | number): Promise<PokemonSpecie> =>
 
 export const getAll = () =>
   Promise.all(
-    Array.from({ length: 15 }).map(async (_, id) => {
+    Array.from({ length: 150 }).map(async (_, id) => {
       const specie = await getPokemonSpecieById(id + 1);
       const variety = await getPokemonVarietyById(
         specie.varieties.find((v) => v.is_default)!.pokemon.name

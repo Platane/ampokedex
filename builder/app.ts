@@ -34,7 +34,7 @@ fs.mkdirSync(outDir, { recursive: true });
       '<meta charset="utf-8">',
       '<meta name="viewport" content="width=device-width, initial-scale=1">',
       "</head>",
-      '<body margin="0">',
+      '<body style="margin:0">',
       '<script src="https://cdn.ampproject.org/shadow-v0.js" ></script>',
       "<script>",
       ...output.map((o) => {

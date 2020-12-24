@@ -3,6 +3,7 @@ import { AmpImg } from "react-amphtml";
 import styled from "@emotion/styled";
 import { Link } from "../Link";
 import type { Pokemon } from "../../builder/pokeapi";
+import { generateColor } from "../_theme";
 
 export const Page = ({
   pokemon,
@@ -15,15 +16,16 @@ export const Page = ({
 
   return (
     <Container>
-      <h1>{pokemon.name}</h1>
-      <AmpImg
-        alt="pokemon sprite"
+      <Image
+        alt={`${pokemon.name} sprite`}
         specName="default"
-        width={300}
-        height={300}
+        width={500}
+        height={340}
+        sizes="(min-width: 500px) 500px, 100vw"
         src={pokemon.imageUrl}
-        style={{ imageRendering: "pixelated" }}
+        style={{ backgroundColor: generateColor(pokemon.color, pokemon.id) }}
       />
+      <h1>{pokemon.name}</h1>
       <h3>{pokemon.genus}</h3>
       <p>{pokemon.flavorText}</p>
       <p>height: {pokemon.height}</p>
@@ -59,6 +61,14 @@ export const Page = ({
     </Container>
   );
 };
+
+const Image = styled(AmpImg)`
+  > img {
+    image-rendering: pixelated;
+    object-fit: contain;
+    object-position: center;
+  }
+`;
 
 const Container = styled.div`
   display: block;

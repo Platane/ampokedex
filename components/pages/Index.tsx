@@ -3,6 +3,7 @@ import React from "react";
 import { AmpImg } from "react-amphtml";
 import type { Pokemon } from "../../builder/pokeapi";
 import { Link } from "../Link";
+import { generateColor } from "../_theme";
 
 export const Page = ({ pokemons }: { pokemons: Pokemon[] }) => (
   <Container>
@@ -27,6 +28,7 @@ const Card = ({ pokemon }: { pokemon: Pokemon }) => (
       width={96}
       height={96}
       src={pokemon.imageUrl}
+      style={{ backgroundColor: generateColor(pokemon.color, pokemon.id) }}
     />
     <CardTitle>{pokemon.name}</CardTitle>
   </CardContainer>
@@ -46,7 +48,11 @@ const CardContainer = styled(Link)`
 `;
 
 const CardImage = styled(AmpImg)`
-  image-rendering: pixelated;
+  > img {
+    image-rendering: pixelated;
+    object-fit: contain;
+    object-position: center;
+  }
 `;
 
 const CardTitle = styled.div`
