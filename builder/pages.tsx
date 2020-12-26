@@ -59,22 +59,17 @@ const generatePage = async (Page: any, props: any, pageName: string) => {
   fs.writeFileSync(filename, content);
 };
 
-const formatHeadTags = (headTags: any[]): any =>
-  headTags
+const formatHeadTags = (headTags: any[]): any => {
+  const key = (t: any) => [t.type, t.props.rel, t.props.name].join(":");
+
+  return headTags
     .reverse()
-    .filter(
-      (t, i, arr) =>
-        i ===
-        arr.findIndex(
-          (t2) =>
-            [t.type, t.rel, t.name].join(":") ===
-            [t2.type, t2.rel, t2.name].join(":")
-        )
-    )
+    .filter((t, i, arr) => i === arr.findIndex((t2) => key(t) === key(t2)))
     .map((t) => {
       const { "data-rh": _, ...props } = t.props || {};
       return { ...t, props };
     });
+};
 
 const extractStyle = (html: string) => {
   const css: string[] = [];
