@@ -75,10 +75,10 @@ import {
       onLoad = () => {
         floatingImage.style.opacity = "1";
         floatingImage.style.transition =
-          "transform 180ms ease-out, width 180ms ease-out, height 180ms ease-out";
+          "transform 220ms linear, width 220ms linear, height 220ms linear";
         applyBoxTransform(floatingImage, box!);
 
-        target.style.opacity = "0";
+        target.style.opacity = "0.1";
 
         onTransitionEnd = () => {
           cancel();
