@@ -48,7 +48,10 @@ const generatePage = async (Page: any, props: any, pageName: string) => {
 
   content = content.replace(
     "<head>",
-    (h) => h + renderToStaticMarkup(headTags as any) + ampBoilerPlater
+    (h) =>
+      h +
+      renderToStaticMarkup(headTags as any).replace(/ data\-rh="[^"]*"/g, "") +
+      ampBoilerPlater
   );
 
   if (false)
