@@ -33,6 +33,8 @@ fs.mkdirSync(outDir, { recursive: true });
       "<head>",
       '<meta charset="utf-8">',
       '<meta name="viewport" content="width=device-width, initial-scale=1">',
+      "<title>ampokedex</title>",
+      '<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" >',
       "</head>",
       '<body style="margin:0">',
       '<script src="https://cdn.ampproject.org/shadow-v0.js" ></script>',
