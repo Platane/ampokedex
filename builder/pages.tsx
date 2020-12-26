@@ -48,10 +48,7 @@ const generatePage = async (Page: any, props: any, pageName: string) => {
 
   content = content.replace(
     "<head>",
-    (h) =>
-      h +
-      renderToStaticMarkup(headTags as any).replace(/ data\-rh="[^"]*"/g, "") +
-      ampBoilerPlater
+    (h) => h + renderToStaticMarkup(formatHeadTags(headTags)) + ampBoilerPlater
   );
 
   if (false)
@@ -61,6 +58,23 @@ const generatePage = async (Page: any, props: any, pageName: string) => {
 
   fs.writeFileSync(filename, content);
 };
+
+const formatHeadTags = (headTags: any[]): any =>
+  headTags
+    .reverse()
+    .filter(
+      (t, i, arr) =>
+        i ===
+        arr.findIndex(
+          (t2) =>
+            [t.type, t.rel, t.name].join(":") ===
+            [t2.type, t2.rel, t2.name].join(":")
+        )
+    )
+    .map((t) => {
+      const { "data-rh": _, ...props } = t.props || {};
+      return { ...t, props };
+    });
 
 const extractStyle = (html: string) => {
   const css: string[] = [];
