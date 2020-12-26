@@ -76,7 +76,7 @@ const Container = styled.div`
   display: flex;
 `;
 const Content = styled.div`
-  padding: 10px;
+  padding: 10px 10px 80px 10px;
 `;
 
 const Paper = styled.div`
