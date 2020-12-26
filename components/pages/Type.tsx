@@ -4,7 +4,7 @@ import type { Pokemon } from "../../builder/pokeapi";
 import type { PokemonType } from "../../builder/pokeapi/types";
 import { Link as HeadLink, Title as HeadTitle } from "react-head";
 import styled from "@emotion/styled";
-import { FixedSizeImage } from "../Image";
+import { TypeIcon } from "../TypeIcon";
 
 export const Page = ({
   pokemons,
@@ -20,12 +20,7 @@ export const Page = ({
       <HeadLink rel="icon" type="image/png" href={gemImageUrl} />
       <div>
         <Title>
-          <FixedSizeImage
-            specName="default"
-            width={60}
-            height={60}
-            src={gemImageUrl}
-          />
+          <TypeIcon type={type} size={60} />
           {type}
         </Title>
 

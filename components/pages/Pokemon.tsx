@@ -5,6 +5,7 @@ import { Image } from "../Image";
 import type { Pokemon } from "../../builder/pokeapi";
 import { generateColor } from "../_theme";
 import { Link as HeadLink, Title } from "react-head";
+import { TypeIcon } from "../TypeIcon";
 
 export const Page = ({
   pokemon,
@@ -36,8 +37,6 @@ export const Page = ({
             <h1>{pokemon.name}</h1>
             <h3>{pokemon.genus}</h3>
             <p>{pokemon.flavorText}</p>
-            <p>height: {pokemon.height}</p>
-            <p>weight: {pokemon.weight}</p>
 
             {ancestor && (
               <p>
@@ -46,13 +45,23 @@ export const Page = ({
               </p>
             )}
 
-            <ul>
-              {pokemon.types.map((type) => (
-                <li key={type}>
-                  <Link href={`/type/${type}`}>{type}</Link>
-                </li>
-              ))}
-            </ul>
+            <p>height: {pokemon.height}</p>
+            <p>weight: {pokemon.weight}</p>
+            <p>
+              types:
+              <ul style={{ listStyleType: "none" }}>
+                {pokemon.types.map((type) => (
+                  <li key={type}>
+                    <Link
+                      href={`/type/${type}`}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <TypeIcon type={type} /> <span>{type}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </p>
 
             <Link href={`/`}>home</Link>
           </Content>
