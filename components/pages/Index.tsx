@@ -33,7 +33,7 @@ const Card = ({ pokemon }: { pokemon: Pokemon }) => {
         width={96 + 18}
         height={96}
         src={pokemon.imageUrl}
-        color={color}
+        style={{ backgroundColor: color }}
       />
       <CardTitle>{pokemon.name}</CardTitle>
     </CardContainer>
@@ -72,7 +72,6 @@ const CardImage = styled(AmpImg)`
     border-radius: 0 0 4px 4px;
   }
 
-  background-color: ${({ color }) => color};
   width: ${({ width }) => width + "px"};
   height: ${({ height }) => height + "px"};
 `;
