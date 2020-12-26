@@ -111,7 +111,7 @@ const ee = createNanoEvents();
 
     topProgressBar.getBoundingClientRect();
     topProgressBar.style.transition =
-      "opacity 120ms ease-out, width 900ms ease-out";
+      "opacity 120ms ease-out 200ms, width 900ms ease-out 200ms";
     topProgressBar.style.width = (Math.random() * 0.4 + 0.5) * 100 + "%";
     topProgressBar.style.opacity = "1";
   });
@@ -119,7 +119,8 @@ const ee = createNanoEvents();
   const end = () => {
     topProgressBar.removeEventListener("transitionend", onTransitionEnd);
 
-    topProgressBar.style.transition = "width 120ms linear";
+    topProgressBar.style.transition =
+      "opacity 120ms ease-out 200ms, width 120ms linear";
     topProgressBar.style.width = "100%";
 
     onTransitionEnd = () => {

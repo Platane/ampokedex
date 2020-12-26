@@ -1,5 +1,6 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { HeadProvider, Link } from "react-head";
 import { getAll, Pokemon } from "./pokeapi";
 import * as path from "path";
 import * as fs from "fs";
@@ -21,22 +22,34 @@ const outDir = path.join(__dirname, "../build");
 const baseUrl = process.env.APP_BASE_URL || "";
 const origin = "https://platane.github.io";
 
+const ampBoilerPlater =
+  "<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>";
+
 const generatePage = async (Page: any, props: any, pageName: string) => {
   const filename = path.join(outDir, pageName + ".html");
 
   fs.mkdirSync(path.dirname(filename), { recursive: true });
 
+  const headTags: any[] = [];
   const element = (
     <LinkProvider baseUrl={baseUrl}>
-      <Html>
-        <Page {...props} />
-      </Html>
+      <HeadProvider headTags={headTags}>
+        <Link rel="canonical" href={origin + baseUrl + "/" + pageName} />
+        <Html>
+          <Page {...props} />
+        </Html>
+      </HeadProvider>
     </LinkProvider>
   );
 
   let content = "<!DOCTYPE HTML>" + renderToStaticMarkup(element);
 
   content = extractStyle(content);
+
+  content = content.replace(
+    "<head>",
+    (h) => h + renderToStaticMarkup(headTags as any) + ampBoilerPlater
+  );
 
   if (false)
     content = await ampOptimizer.transformHtml(content, {

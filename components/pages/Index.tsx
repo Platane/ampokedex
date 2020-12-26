@@ -17,34 +17,51 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 4px;
+  margin: 6px;
 `;
 
-const Card = ({ pokemon }: { pokemon: Pokemon }) => (
-  <CardContainer href={`/pokemon/${pokemon.id}`}>
-    <CardImage
-      alt="pokemon sprite"
-      specName="default"
-      width={96}
-      height={96}
-      src={pokemon.imageUrl}
-      style={{ backgroundColor: generateColor(pokemon.color, pokemon.id) }}
-    />
-    <CardTitle>{pokemon.name}</CardTitle>
-  </CardContainer>
-);
+const Card = ({ pokemon }: { pokemon: Pokemon }) => {
+  const color = generateColor(pokemon.color, pokemon.id);
+  return (
+    <CardContainer
+      href={`/pokemon/${pokemon.id}`}
+      style={{ backgroundColor: color }}
+    >
+      <CardImage
+        alt="pokemon sprite"
+        specName="default"
+        width={96 + 18}
+        height={96}
+        src={pokemon.imageUrl}
+        color={color}
+      />
+      <CardTitle>{pokemon.name}</CardTitle>
+    </CardContainer>
+  );
+};
 
 const CardContainer = styled(Link)`
-  width: 100px;
-  height: 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: enter;
 
   background-color: #fafafa;
-  margin: 4px;
+  margin: 6px;
   box-shadow: 0 0 0 1px #e8e8e8;
+  border-radius: 4px;
+
+  text-decoration: none;
+
+  transition: transform 180ms;
+  &:hover {
+    transition: transform 80ms;
+    transform: scale(0.96);
+  }
+  &:active {
+    transition: transform 80ms;
+    transform: scale(0.92);
+  }
 `;
 
 const CardImage = styled(AmpImg)`
@@ -52,20 +69,16 @@ const CardImage = styled(AmpImg)`
     image-rendering: pixelated;
     object-fit: contain;
     object-position: center;
+    border-radius: 0 0 4px 4px;
   }
+
+  background-color: ${({ color }) => color};
+  width: ${({ width }) => width + "px"};
+  height: ${({ height }) => height + "px"};
 `;
 
 const CardTitle = styled.div`
   text-align: center;
+  color: #333;
+  text-transform: capitalize;
 `;
-
-// const BackgroundType = ({ types, ...props }) => (
-//   <svg {...props} viewBox="0 0 100 100">
-//     {types.map((type, i, { length }) => {
-//       const a = (i / length) * Math.PI * 2 + 12;
-//       const b = ((i + 1) / length) * Math.PI * 2 + 12;
-
-//       return <path d="0"
-//     })}
-//   </svg>
-// );
