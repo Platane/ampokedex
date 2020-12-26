@@ -42,7 +42,7 @@ const Container = styled(Link)`
 
 const Title = styled.div<{ light: boolean }>`
   text-align: center;
-  color: ${({ light }) => (light ? "#eee" : "#333")};
+  color: ${({ light }) => (light ? "#eee" : "#000")};
   font-size: 9px;
   margin-bottom: 4px;
   text-transform: capitalize;
