@@ -21,13 +21,12 @@ export const Page = ({
       <HeadLink rel="icon" type="image/png" href={pokemon.imageUrl!} />
       <Container>
         <Paper>
-          <Image
+          <HeroImage
             data-layout-target={pokemon.name}
             alt={`${pokemon.name} sprite`}
             specName="default"
             width={500}
             height={340}
-            sizes="100%"
             src={pokemon.imageUrl}
             style={{
               backgroundColor: generateColor(pokemon.color, pokemon.id),
@@ -62,6 +61,10 @@ export const Page = ({
     </>
   );
 };
+
+const HeroImage = styled(Image)`
+  width: 100% !important;
+`;
 
 const Container = styled.div`
   display: flex;
