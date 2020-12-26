@@ -44,10 +44,16 @@ export const events = createNanoEvents();
 
       if (currentPage?.targetUrl !== url) throw new Error("aborted");
 
-      // set title
+      // set title and icon
       {
         const title = doc.querySelector("title");
         if (title) document.title = title.innerText;
+
+        const icon = doc.querySelector('link[rel="icon"]');
+        if (icon)
+          document
+            .querySelector('link[rel="icon"]')
+            ?.setAttribute("href", icon.getAttribute("href") || "");
       }
 
       // dispose of the current doc

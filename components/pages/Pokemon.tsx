@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { Link } from "../Link";
 import type { Pokemon } from "../../builder/pokeapi";
 import { generateColor } from "../_theme";
-import { Title } from "react-head";
+import { Link as HeadLink, Title } from "react-head";
 
 export const Page = ({
   pokemon,
@@ -18,6 +18,7 @@ export const Page = ({
   return (
     <>
       <Title>ampokedex | {pokemon.name}</Title>
+      <HeadLink rel="icon" type="image/png" href={pokemon.imageUrl!} />
       <Container>
         <Image
           alt={`${pokemon.name} sprite`}
