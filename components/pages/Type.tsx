@@ -1,8 +1,10 @@
 import React from "react";
-import { AmpImg } from "react-amphtml";
-import { Link } from "../Link";
+import { Card } from "../Card";
 import type { Pokemon } from "../../builder/pokeapi";
 import type { PokemonType } from "../../builder/pokeapi/types";
+import { Link as HeadLink, Title as HeadTitle } from "react-head";
+
+import styled from "@emotion/styled";
 
 export const Page = ({
   pokemons,
@@ -11,21 +13,42 @@ export const Page = ({
   type: PokemonType;
   pokemons: Pokemon[];
 }) => (
-  <div>
-    <h1>{type}</h1>
-
-    {pokemons.map((pokemon) => (
-      <Link key={pokemon.id} href={`/pokemon/${pokemon.id}`}>
-        <AmpImg
-          alt="pokemon sprite"
-          specName="default"
-          width={96}
-          height={96}
-          src={pokemon.imageUrl}
-          style={{ imageRendering: "pixelated" }}
+  <>
+    <HeadTitle>ampokedex | {type} pokemons</HeadTitle>
+    <HeadLink
+      rel="icon"
+      type="image/png"
+      href={`https://github.com/PokeAPI/sprites/raw/master/sprites/items/${type}-gem.png`}
+    />
+    <div>
+      <Title>
+        <img
+          style={{ width: "40px", height: "40px" }}
+          src={`https://github.com/PokeAPI/sprites/raw/master/sprites/items/${type}-gem.png`}
         />
-        <h3>{pokemon.name}</h3>
-      </Link>
-    ))}
-  </div>
+        {type}
+      </Title>
+
+      <List>
+        {pokemons.map((pokemon) => (
+          <Card key={pokemon.id} pokemon={pokemon} />
+        ))}
+      </List>
+    </div>
+  </>
 );
+
+const Title = styled.h1`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 20px 0;
+`;
+
+const List = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 6px;
+`;

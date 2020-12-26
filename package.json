@@ -17,6 +17,7 @@
     "@emotion/styled": "11.0.0",
     "nanoevents": "5.1.10",
     "node-fetch": "2.6.1",
+    "pokemon-font": "1.8.1",
     "p-limit": "3.1.0",
     "react": "17.0.1",
     "react-head": "3.4.0",
@@ -53,7 +54,7 @@
   "scripts": {
     "type": "tsc --noEmit",
     "lint": "prettier -c '**/*.{ts,tsx,js,jsx,json,md}' '!{build,.cache}/**'",
-    "build": "ts-node builder/pages.tsx ; ts-node builder/app.ts",
+    "build": "ts-node builder/pages.tsx && ts-node builder/app.ts && cp node_modules/pokemon-font/fonts/pokemon-font.* build/",
     "serve": "serve build"
   }
 }

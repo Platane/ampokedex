@@ -26,7 +26,7 @@ const ampBoilerPlater =
   "<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>";
 
 const generatePage = async (Page: any, props: any, pageName: string) => {
-  const filename = path.join(outDir, pageName + ".html");
+  const filename = path.join(outDir, (pageName || "index") + ".html");
 
   fs.mkdirSync(path.dirname(filename), { recursive: true });
 
@@ -112,7 +112,7 @@ const extractStyle = (html: string) => {
 
   //
 
-  generatePage(PageIndex, { pokemons, pokemonByColor, pokemonByType }, `index`);
+  generatePage(PageIndex, { pokemons, pokemonByColor, pokemonByType }, "");
 
   for (const pokemon of pokemons)
     generatePage(

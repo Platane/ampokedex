@@ -54,6 +54,8 @@ export const typeColor: Record<PokemonType, string> = {
 
 // return `hsl(${Math.round(h)},${Math.round(s)}%,${Math.round(l)}%)`;
 
+export const backgroundColor = "#f5f5f5";
+
 const standardColors = {
   blue: ["#ddf3f5", "#abc2e8", "#b0deff", "#bfcfff"],
   red: ["#e5707e", "#fa877f", "#ffa5a5"],

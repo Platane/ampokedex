@@ -20,48 +20,44 @@ export const Page = ({
       <Title>ampokedex | {pokemon.name}</Title>
       <HeadLink rel="icon" type="image/png" href={pokemon.imageUrl!} />
       <Container>
-        <Image
-          alt={`${pokemon.name} sprite`}
-          specName="default"
-          width={500}
-          height={340}
-          sizes="(min-width: 500px) 500px, 100vw"
-          src={pokemon.imageUrl}
-          style={{ backgroundColor: generateColor(pokemon.color, pokemon.id) }}
-        />
-        <h1>{pokemon.name}</h1>
-        <h3>{pokemon.genus}</h3>
-        <p>{pokemon.flavorText}</p>
-        <p>height: {pokemon.height}</p>
-        <p>weight: {pokemon.weight}</p>
-
-        {ancestor && (
-          <p>
-            <span>evolves from </span>
-            <Link href={`/pokemon/${ancestor.id}`}>{ancestor.name}</Link>
-          </p>
-        )}
-
-        <Link href={`/color/${pokemon.color}`}>
-          <div
+        <Paper>
+          <Image
+            data-layout-target={pokemon.name}
+            alt={`${pokemon.name} sprite`}
+            specName="default"
+            width={500}
+            height={340}
+            sizes="100%"
+            src={pokemon.imageUrl}
             style={{
-              width: "50px",
-              height: "50px",
-              borderRadius: "25px",
-              backgroundColor: pokemon.color,
+              backgroundColor: generateColor(pokemon.color, pokemon.id),
             }}
           />
-        </Link>
+          <Content>
+            <h1>{pokemon.name}</h1>
+            <h3>{pokemon.genus}</h3>
+            <p>{pokemon.flavorText}</p>
+            <p>height: {pokemon.height}</p>
+            <p>weight: {pokemon.weight}</p>
 
-        <ul>
-          {pokemon.types.map((type) => (
-            <li key={type}>
-              <Link href={`/type/${type}`}>{type}</Link>
-            </li>
-          ))}
-        </ul>
+            {ancestor && (
+              <p>
+                <span>evolves from </span>
+                <Link href={`/pokemon/${ancestor.id}`}>{ancestor.name}</Link>
+              </p>
+            )}
 
-        <Link href={`/`}>home</Link>
+            <ul>
+              {pokemon.types.map((type) => (
+                <li key={type}>
+                  <Link href={`/type/${type}`}>{type}</Link>
+                </li>
+              ))}
+            </ul>
+
+            <Link href={`/`}>home</Link>
+          </Content>
+        </Paper>
       </Container>
     </>
   );
@@ -69,6 +65,7 @@ export const Page = ({
 
 const Image = styled(AmpImg)`
   > img {
+    image-rendering: crisp-edges;
     image-rendering: pixelated;
     object-fit: contain;
     object-position: center;
@@ -76,5 +73,16 @@ const Image = styled(AmpImg)`
 `;
 
 const Container = styled.div`
+  display: flex;
+`;
+const Content = styled.div`
+  padding: 10px;
+`;
+
+const Paper = styled.div`
   display: block;
+  margin: 0 auto;
+  max-width: 720px;
+  box-shadow: 2px 6px 8px 0px #46464610;
+  background-color: #fff;
 `;

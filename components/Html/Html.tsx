@@ -1,7 +1,9 @@
 import React from "react";
 import { AmpInstallServiceworker } from "react-amphtml";
 import { Link, Title } from "react-head";
+import { createFontFace } from "../fontFace";
 import { BaseUrlConsumer } from "../Link";
+import { backgroundColor } from "../_theme";
 
 type Props = {
   children: any;
@@ -18,6 +20,7 @@ export const Html = ({ children }: Props) => (
       lang="en"
       // @ts-ignore
       amp="true"
+      style={{ height: "auto" }}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,9 +41,27 @@ export const Html = ({ children }: Props) => (
             />
           )}
         </BaseUrlConsumer>
+
+        <BaseUrlConsumer>
+          {(baseUrl) => (
+            <style
+              dangerouslySetInnerHTML={{ __html: createFontFace(baseUrl) }}
+            />
+          )}
+        </BaseUrlConsumer>
       </head>
 
-      <body style={{ margin: 0 }}>{children}</body>
+      <body
+        style={{
+          margin: 0,
+          height: "auto",
+          fontFamily: "pokemon-font, helvetica, monospace",
+          fontSize: "0.6em",
+          backgroundColor,
+        }}
+      >
+        {children}
+      </body>
     </html>
   </>
 );

@@ -1251,6 +1251,11 @@ picomatch@^2.2.2:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
   integrity sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
 
+pokemon-font@1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/pokemon-font/-/pokemon-font-1.8.1.tgz#55cad862590fce41b5dbb4f080693f9444bea097"
+  integrity sha512-INOiw38rYaIig9ehTow6RZ2FbXNtm+5B/BpNUIwkctkGfZxjx86QqPPGwAmvrCoze9lohkML0hP7u6qu1gi1rQ==
+
 postcss-safe-parser@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/postcss-safe-parser/-/postcss-safe-parser-4.0.2.tgz#a6d4e48f0f37d9f7c11b2a581bf00f8ba4870b96"

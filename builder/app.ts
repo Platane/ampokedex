@@ -7,6 +7,8 @@ import { terser } from "rollup-plugin-terser";
 import replace from "rollup-plugin-replace";
 import { rollup } from "rollup";
 import * as crypto from "crypto";
+import { createFontFace } from "../components/fontFace";
+import { backgroundColor } from "../components/_theme";
 
 const outDir = path.join(__dirname, "../build");
 fs.mkdirSync(outDir, { recursive: true });
@@ -29,15 +31,16 @@ fs.mkdirSync(outDir, { recursive: true });
 
     const html = [
       `<!DOCTYPE HTML>`,
-      '<html lang="en">',
+      '<html lang="en" style="height:auto">',
       "<head>",
       '<meta charset="utf-8">',
       '<meta name="viewport" content="width=device-width, initial-scale=1">',
       "<title>ampokedex</title>",
       '<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" >',
+      `<style>${createFontFace(process.env.APP_BASE_URL)}</style>`,
       "</head>",
-      '<body style="margin:0">',
-      '<script src="https://cdn.ampproject.org/shadow-v0.js" ></script>',
+      `<body style="margin:0;height:auto;background-color:${backgroundColor};overflow:visible">`,
+      '<script src="https://cdn.ampproject.org/shadow-v0.js"></script>',
       "<script>",
       ...output.map((o) => {
         if (o.type === "chunk") return o.code;
