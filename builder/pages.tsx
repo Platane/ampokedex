@@ -8,7 +8,6 @@ import { Html } from "../components/Html/Html";
 import { Provider as LinkProvider } from "../components/Link";
 import { Page as PagePokemon } from "../components/pages/Pokemon";
 import { Page as PageIndex } from "../components/pages/Index";
-import { Page as PageColor } from "../components/pages/Color";
 import { Page as PageType } from "../components/pages/Type";
 
 // @ts-ignore
@@ -120,9 +119,6 @@ const extractStyle = (html: string) => {
       { pokemon, pokemonById, pokemonByColor, pokemonByType },
       `pokemon/${pokemon.id}`
     );
-
-  for (const [color, pokemons] of Object.entries(pokemonByColor))
-    generatePage(PageColor, { color, pokemons }, `color/${color}`);
 
   for (const [type, pokemons] of Object.entries(pokemonByType))
     generatePage(PageType, { type, pokemons }, `type/${type}`);

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { AmpImg } from "react-amphtml";
 import type { Pokemon } from "../builder/pokeapi";
+import { FixedSizeImage } from "./Image";
 import { Link } from "./Link";
 import { generateColor } from "./_theme";
 
@@ -12,7 +12,7 @@ export const Card = ({ pokemon }: { pokemon: Pokemon }) => {
       href={`/pokemon/${pokemon.id}`}
       style={{ backgroundColor: color }}
     >
-      <Image
+      <FixedSizeImage
         data-layout-source={pokemon.name}
         alt={`${pokemon.name} sprite`}
         specName="default"
@@ -38,18 +38,6 @@ const Container = styled(Link)`
   overflow: hidden;
 
   text-decoration: none;
-`;
-
-const Image = styled(AmpImg)`
-  > img {
-    image-rendering: crisp-edges;
-    image-rendering: pixelated;
-    object-fit: contain;
-    object-position: center;
-  }
-
-  width: ${({ width }) => width + "px"};
-  height: ${({ height }) => height + "px"};
 `;
 
 const Title = styled.div<{ light: boolean }>`

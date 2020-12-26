@@ -3,8 +3,8 @@ import { Card } from "../Card";
 import type { Pokemon } from "../../builder/pokeapi";
 import type { PokemonType } from "../../builder/pokeapi/types";
 import { Link as HeadLink, Title as HeadTitle } from "react-head";
-
 import styled from "@emotion/styled";
+import { FixedSizeImage } from "../Image";
 
 export const Page = ({
   pokemons,
@@ -12,31 +12,32 @@ export const Page = ({
 }: {
   type: PokemonType;
   pokemons: Pokemon[];
-}) => (
-  <>
-    <HeadTitle>ampokedex | {type} pokemons</HeadTitle>
-    <HeadLink
-      rel="icon"
-      type="image/png"
-      href={`https://github.com/PokeAPI/sprites/raw/master/sprites/items/${type}-gem.png`}
-    />
-    <div>
-      <Title>
-        <img
-          style={{ width: "40px", height: "40px" }}
-          src={`https://github.com/PokeAPI/sprites/raw/master/sprites/items/${type}-gem.png`}
-        />
-        {type}
-      </Title>
+}) => {
+  const gemImageUrl = `https://github.com/PokeAPI/sprites/raw/master/sprites/items/${type}-gem.png`;
+  return (
+    <>
+      <HeadTitle>ampokedex | {type} pokemons</HeadTitle>
+      <HeadLink rel="icon" type="image/png" href={gemImageUrl} />
+      <div>
+        <Title>
+          <FixedSizeImage
+            specName="default"
+            width={60}
+            height={60}
+            src={gemImageUrl}
+          />
+          {type}
+        </Title>
 
-      <List>
-        {pokemons.map((pokemon) => (
-          <Card key={pokemon.id} pokemon={pokemon} />
-        ))}
-      </List>
-    </div>
-  </>
-);
+        <List>
+          {pokemons.map((pokemon) => (
+            <Card key={pokemon.id} pokemon={pokemon} />
+          ))}
+        </List>
+      </div>
+    </>
+  );
+};
 
 const Title = styled.h1`
   display: flex;
