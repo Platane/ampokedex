@@ -1,6 +1,6 @@
 import React from "react";
 import { AmpInstallServiceworker } from "react-amphtml";
-import { Title } from "react-head";
+import { Link, Title } from "react-head";
 import { BaseUrlConsumer } from "../Link";
 
 type Props = {
@@ -9,6 +9,11 @@ type Props = {
 export const Html = ({ children }: Props) => (
   <>
     <Title>ampokedex</Title>
+    <Link
+      rel="icon"
+      type="image/png"
+      href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+    ></Link>
     <html
       lang="en"
       // @ts-ignore
