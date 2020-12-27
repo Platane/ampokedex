@@ -50,18 +50,15 @@ export const Page = ({
             <p>weight: {pokemon.weight}</p>
             <p>
               types:
-              <ul style={{ listStyleType: "none" }}>
-                {pokemon.types.map((type) => (
-                  <li key={type}>
-                    <Link
-                      href={`/type/${type}`}
-                      style={{ display: "flex", alignItems: "center" }}
-                    >
-                      <TypeIcon type={type} /> <span>{type}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              {pokemon.types.map((type) => (
+                <Link
+                  key={type}
+                  href={`/type/${type}`}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <TypeIcon type={type} /> <span>{type}</span>
+                </Link>
+              ))}
             </p>
 
             <Link href={`/`}>home</Link>

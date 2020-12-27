@@ -28,6 +28,8 @@ export const Layout = ({ children }: { children: any }) => (
           overflow: "visible",
           margin: 0,
           fontFamily: "pokemon-font, helvetica, monospace",
+          display: "flex",
+          flexDirection: "column",
         },
       }}
     />

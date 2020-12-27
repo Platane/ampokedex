@@ -8,7 +8,9 @@ export const Footer = (props: any) => (
 );
 
 const Container = styled.div`
-  display: block;
+  margin-top: auto;
+  padding-top: 40px;
+  font-size: 9px;
 `;
 
 const Legal = () => (

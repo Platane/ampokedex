@@ -1,91 +1,23 @@
 import React from "react";
-import { renderToStaticMarkup } from "react-dom/server";
-import { HeadProvider, Link } from "react-head";
+import { Link } from "react-head";
 import { getAll, Pokemon } from "./pokeapi";
 import * as path from "path";
 import * as fs from "fs";
-import { Html } from "../components/Html/Html";
-import { Provider as LinkProvider } from "../components/Link";
-import { Page as PagePokemon } from "../components/pages/Pokemon";
-import { Page as PageIndex } from "../components/pages/Index";
-import { Page as PageType } from "../components/pages/Type";
-
+import { generatePage } from "../service/generatePage/generatePage";
 // @ts-ignore
 import AmpOptimizer from "@ampproject/toolbox-optimizer";
 import type { Color, PokemonType } from "./pokeapi/types";
+import { AmpInstallServiceworker } from "react-amphtml";
+import { origin, baseUrl } from "../service/package";
+
+import { Page as PagePokemon } from "../components/pages/Pokemon";
+import { Page as PageIndex } from "../components/pages/Index";
+import { Page as PageType } from "../components/pages/Type";
+import { Layout } from "../components/Layout/Layout";
 
 const ampOptimizer = AmpOptimizer.create();
 
 const outDir = path.join(__dirname, "../build");
-
-const baseUrl = process.env.APP_BASE_URL || "";
-const origin = "https://platane.github.io";
-
-const ampBoilerPlater =
-  "<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>";
-
-const generatePage = async (Page: any, props: any, pageName: string) => {
-  const filename = path.join(outDir, (pageName || "index") + ".html");
-
-  fs.mkdirSync(path.dirname(filename), { recursive: true });
-
-  const headTags: any[] = [];
-  const element = (
-    <LinkProvider baseUrl={baseUrl}>
-      <HeadProvider headTags={headTags}>
-        <Link rel="canonical" href={origin + baseUrl + "/" + pageName} />
-        <Html>
-          <Page {...props} />
-        </Html>
-      </HeadProvider>
-    </LinkProvider>
-  );
-
-  let content = "<!DOCTYPE HTML>" + renderToStaticMarkup(element);
-
-  content = extractStyle(content);
-
-  content = content.replace(
-    "<head>",
-    (h) => h + renderToStaticMarkup(formatHeadTags(headTags)) + ampBoilerPlater
-  );
-
-  if (false)
-    content = await ampOptimizer.transformHtml(content, {
-      canonical: origin + baseUrl + pageName,
-    });
-
-  fs.writeFileSync(filename, content);
-};
-
-const formatHeadTags = (headTags: any[]): any => {
-  const key = (t: any) => [t.type, t.props.rel, t.props.name].join(":");
-
-  return headTags
-    .reverse()
-    .filter((t, i, arr) => i === arr.findIndex((t2) => key(t) === key(t2)))
-    .map((t) => {
-      const { "data-rh": _, ...props } = t.props || {};
-      return { ...t, props };
-    });
-};
-
-const extractStyle = (html: string) => {
-  const css: string[] = [];
-
-  const h = html.replace(
-    /<\s*style[^>]*>(((?!<\/style).)*)<\/style\s*>/g,
-    (_, inside) => {
-      css.push(inside);
-      return "";
-    }
-  );
-
-  return h.replace(
-    "<head>",
-    (h) => h + `<style amp-custom>${css.join("")}</style>`
-  );
-};
 
 (async () => {
   const pokemons = await getAll();
@@ -110,16 +42,64 @@ const extractStyle = (html: string) => {
   }
 
   //
+  const pages = [
+    {
+      component: PageIndex,
+      props: {},
+      href: "/",
+    },
 
-  generatePage(PageIndex, { pokemons, pokemonByColor, pokemonByType }, "");
+    ...Object.entries(pokemonByType).map(([type, pokemons]) => ({
+      component: PageType,
+      props: { type, pokemons },
+      href: `/type/${type}`,
+    })),
 
-  for (const pokemon of pokemons)
-    generatePage(
-      PagePokemon,
-      { pokemon, pokemonById, pokemonByColor, pokemonByType },
-      `pokemon/${pokemon.id}`
+    ...pokemons.map((pokemon) => ({
+      component: PagePokemon,
+      props: { pokemon },
+      href: `/pokemon/${pokemon.id}`,
+    })),
+  ];
+
+  for (const { href, props, component } of pages) {
+    const canonical = origin + baseUrl + href;
+    const element = (
+      <>
+        <Link rel="canonical" href={canonical} />
+        <Layout>
+          {React.createElement(component as any, {
+            pokemonById,
+            pokemonByColor,
+            pokemonByType,
+            pokemons,
+            ...props,
+          })}
+        </Layout>
+      </>
     );
+    // <AmpInstallServiceworker
+    //   src={baseUrl + "/service-worker.js"}
+    //   // @ts-ignore
+    //   layout="nodisplay"
+    // />
 
-  for (const [type, pokemons] of Object.entries(pokemonByType))
-    generatePage(PageType, { type, pokemons }, `type/${type}`);
+    const headTags = [
+      <script async src="https://cdn.ampproject.org/v0.js" />,
+      <script
+        async
+        custom-element="amp-install-serviceworker"
+        src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"
+      />,
+    ];
+
+    let content = generatePage({ amp: true, body: element, headTags, baseUrl });
+
+    if (false)
+      content = await ampOptimizer.transformHtml(content, { canonical });
+
+    const filename = path.join(outDir, (href.slice(1) || "index") + ".html");
+    fs.mkdirSync(path.dirname(filename), { recursive: true });
+    fs.writeFileSync(filename, content);
+  }
 })().catch(console.error);

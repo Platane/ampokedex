@@ -20,7 +20,7 @@ export const Link = ({
   ...props
 }: {
   href: string;
-  children: any;
+  children?: any;
   style?: any;
 }) => {
   const baseUrl = useBaseUrl();
