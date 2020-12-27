@@ -6,6 +6,7 @@ import type { Pokemon } from "../../builder/pokeapi";
 import { generateColor } from "../_theme";
 import { Link as HeadLink, Title } from "react-head";
 import { TypeIcon } from "../TypeIcon";
+import { Container, Paper as Paper_ } from "../Layout/Paper";
 
 export const Page = ({
   pokemon,
@@ -35,9 +36,9 @@ export const Page = ({
             attribution="Pokémon and Pokémon character names are trademarks of Nintendo."
           />
           <Content>
-            <h1>{pokemon.name}</h1>
-            <h3>{pokemon.genus}</h3>
-            <p>{pokemon.flavorText}</p>
+            <Name>{pokemon.name}</Name>
+            <Genus>{pokemon.genus}</Genus>
+            <FlavorText>{pokemon.flavorText}</FlavorText>
 
             {ancestor && (
               <p>
@@ -60,8 +61,6 @@ export const Page = ({
                 </Link>
               ))}
             </p>
-
-            <Link href={`/`}>home</Link>
           </Content>
         </Paper>
       </Container>
@@ -69,22 +68,20 @@ export const Page = ({
   );
 };
 
+const Name = styled.h1``;
+const Genus = styled.p`
+  font-style: italic;
+`;
+const FlavorText = styled.p``;
+
 const HeroImage = styled(Image)`
   width: 100% !important;
-`;
-
-const Container = styled.div`
-  display: flex;
 `;
 
 const Content = styled.div`
   padding: 10px 10px 80px 10px;
 `;
 
-const Paper = styled.div`
-  display: block;
-  margin: 0 auto;
-  max-width: 720px;
-  box-shadow: 2px 6px 8px 0px #46464610;
-  background-color: #fff;
+const Paper = styled(Paper_)`
+  padding: 0;
 `;

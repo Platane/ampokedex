@@ -12,6 +12,8 @@ import { origin, baseUrl } from "../service/package";
 
 import { Page as PagePokemon } from "../components/pages/Pokemon";
 import { Page as PageIndex } from "../components/pages/Index";
+import { Page as PageAbout } from "../components/pages/About";
+import { Page as PageTypes } from "../components/pages/Types";
 import { Page as PageType } from "../components/pages/Type";
 import { Layout } from "../components/Layout/Layout";
 
@@ -47,6 +49,18 @@ const outDir = path.join(__dirname, "../build");
       component: PageIndex,
       props: {},
       href: "/",
+    },
+
+    {
+      component: PageAbout,
+      props: {},
+      href: "/about",
+    },
+
+    {
+      component: PageTypes,
+      props: {},
+      href: "/type/",
     },
 
     ...Object.entries(pokemonByType).map(([type, pokemons]) => ({
@@ -98,7 +112,10 @@ const outDir = path.join(__dirname, "../build");
     if (false)
       content = await ampOptimizer.transformHtml(content, { canonical });
 
-    const filename = path.join(outDir, (href.slice(1) || "index") + ".html");
+    const filename = path.join(
+      outDir,
+      href.slice(1) + (href[href.length - 1] === "/" ? "index" : "") + ".html"
+    );
     fs.mkdirSync(path.dirname(filename), { recursive: true });
     fs.writeFileSync(filename, content);
   }

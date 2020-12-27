@@ -9,7 +9,7 @@ export const Footer = (props: any) => (
 
 const Container = styled.div`
   margin-top: auto;
-  padding-top: 40px;
+  padding: 40px 6px 6px 6px;
   font-size: 9px;
 `;
 

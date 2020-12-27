@@ -1,6 +1,6 @@
 const pkg = require("../package.json");
 
-export const { name, description, author, homepage } = pkg;
+export const { name, description, author } = pkg;
 
 export const logoUrl =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";
