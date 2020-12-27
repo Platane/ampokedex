@@ -8,6 +8,7 @@ import { sortHeadTags, formatHeadTags } from "./headTagsUtils";
 import { CacheProvider, Global } from "@emotion/react";
 import createEmotionServer from "@emotion/server/create-instance";
 import createCache from "@emotion/cache";
+import { createFontFace } from "../../components/fontFace";
 
 export const generatePage = ({
   body,
@@ -42,14 +43,15 @@ export const generatePage = ({
     ...(amp ? ampBoilerPlate : []),
     <style
       amp-custom={amp && "true"}
-      dangerouslySetInnerHTML={{ __html: css }}
+      dangerouslySetInnerHTML={{ __html: createFontFace(baseUrl) + css }}
     />,
     <meta charSet="utf-8" />,
     <meta name="viewport" content="width=device-width, initial-scale=1" />,
   ]);
 
   return (
-    "<!DOCTYPE HTML>" + renderToStaticMarkup(<Html html={html} amp={amp} />)
+    "<!DOCTYPE HTML>" +
+    renderToStaticMarkup(<Html html={html} head={headTags} amp={amp} />)
   );
 };
 

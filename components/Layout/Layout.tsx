@@ -32,12 +32,6 @@ export const Layout = ({ children }: { children: any }) => (
       }}
     />
 
-    <BaseUrlConsumer>
-      {(baseUrl) => (
-        <style dangerouslySetInnerHTML={{ __html: createFontFace(baseUrl) }} />
-      )}
-    </BaseUrlConsumer>
-
     <Header />
     {children}
     <Footer />
