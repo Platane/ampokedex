@@ -20,6 +20,7 @@ export const Card = ({ pokemon }: { pokemon: Pokemon }) => {
         height={96}
         src={pokemon.imageUrl}
         style={{ backgroundColor: color }}
+        attribution="Pokémon and Pokémon character names are trademarks of Nintendo."
       />
       <Title light={pokemon.color === "black"}>{pokemon.name}</Title>
     </Container>

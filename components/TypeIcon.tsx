@@ -19,5 +19,6 @@ export const TypeIcon = ({
     width={size}
     height={size}
     src={getGemImageUrl(type)}
+    attribution="Pokémon and Pokémon character names are trademarks of Nintendo."
   />
 );

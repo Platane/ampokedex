@@ -32,6 +32,7 @@ export const Page = ({
             style={{
               backgroundColor: generateColor(pokemon.color, pokemon.id),
             }}
+            attribution="Pokémon and Pokémon character names are trademarks of Nintendo."
           />
           <Content>
             <h1>{pokemon.name}</h1>
