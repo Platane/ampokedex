@@ -11,7 +11,7 @@ export const Page = ({ pokemons }: { pokemons: Pokemon[] }) => (
   </List>
 );
 
-const List = styled.div`
+export const List = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

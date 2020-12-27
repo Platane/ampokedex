@@ -5,6 +5,7 @@ import type { PokemonType } from "../../builder/pokeapi/types";
 import { Link as HeadLink, Title as HeadTitle } from "react-head";
 import styled from "@emotion/styled";
 import { TypeIcon } from "../TypeIcon";
+import { List } from "./Index";
 
 export const Page = ({
   pokemons,
@@ -40,11 +41,4 @@ const Title = styled.h1`
   align-items: center;
   margin: 0;
   padding: 20px 0;
-`;
-
-const List = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 6px;
 `;
