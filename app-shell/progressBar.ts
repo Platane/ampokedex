@@ -9,11 +9,12 @@ import { events } from "./navigation";
   topProgressBar.style.backgroundColor = "orange";
   topProgressBar.style.position = "fixed";
   topProgressBar.style.pointerEvents = "none";
-  document.body.appendChild(topProgressBar);
 
   let onTransitionEnd = () => undefined as void;
 
   events.on("pageTransition:started", () => {
+    document.body.appendChild(topProgressBar);
+
     topProgressBar.style.width = "0";
     topProgressBar.style.opacity = "0";
     topProgressBar.style.transition = "";

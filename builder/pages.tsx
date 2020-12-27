@@ -76,13 +76,13 @@ const outDir = path.join(__dirname, "../build");
             ...props,
           })}
         </Layout>
+        <AmpInstallServiceworker
+          src={baseUrl + "/service-worker.js"}
+          // @ts-ignore
+          layout="nodisplay"
+        />
       </>
     );
-    // <AmpInstallServiceworker
-    //   src={baseUrl + "/service-worker.js"}
-    //   // @ts-ignore
-    //   layout="nodisplay"
-    // />
 
     const headTags = [
       <script async src="https://cdn.ampproject.org/v0.js" />,

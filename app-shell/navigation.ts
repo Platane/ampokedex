@@ -3,12 +3,13 @@ import { loadAmpShadow, ShadowDoc } from "./ampShadow";
 import { fetchDocument } from "./fetchDocument";
 import { interceptNavigation } from "./interceptNavigation";
 
-const container = document.createElement("div");
-document.body.appendChild(container);
-
 export const events = createNanoEvents();
 
-{
+const init = () => {
+  events.emit("init");
+
+  const container = document.getElementById("root")!;
+
   let currentPage: null | {
     targetUrl: string;
     abort?: () => void;
@@ -41,6 +42,9 @@ export const events = createNanoEvents();
       currentPage.abort = promise.abort;
 
       const [amp, doc] = await Promise.all([loadAmpShadow(), promise]);
+
+      for (const el of doc.querySelectorAll("[data-static-content]"))
+        el.parentElement?.removeChild?.(el);
 
       if (currentPage?.targetUrl !== url) throw new Error("aborted");
 
@@ -82,7 +86,7 @@ export const events = createNanoEvents();
     }
   };
 
-  interceptNavigation(container, (url, anchorElement) => {
+  interceptNavigation(document.body, (url, anchorElement) => {
     events.emit("navigate", url, anchorElement);
     window.history.pushState({}, undefined as any, url);
     onRouteChange(url);
@@ -101,8 +105,11 @@ export const events = createNanoEvents();
 
     onRouteChange(url);
   }
-}
+};
 
 const emptyDomElement = (container?: HTMLElement) => {
   while (container?.children?.[0]) container.removeChild(container.children[0]);
 };
+
+if (document.body) init();
+else window.addEventListener("load", init);

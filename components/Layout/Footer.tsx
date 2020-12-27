@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 
 export const Footer = (props: any) => (
-  <Container {...props}>
+  <Container data-static-content {...props}>
     <Legal />
   </Container>
 );
