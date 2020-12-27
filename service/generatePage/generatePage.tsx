@@ -51,7 +51,9 @@ export const generatePage = ({
 
   return (
     "<!DOCTYPE HTML>" +
-    renderToStaticMarkup(<Html html={html} head={headTags} amp={amp} />)
+    renderToStaticMarkup(
+      <Html html={html} head={headTags} amp={amp} />
+    ).replace(/="true"/g, "")
   );
 };
 
@@ -64,7 +66,7 @@ const Html = ({ html, amp, head }: Props) => (
   <html
     lang="en"
     // @ts-ignore
-    amp={amp && "amp"}
+    amp={amp && "true"}
   >
     <head>{head}</head>
 
