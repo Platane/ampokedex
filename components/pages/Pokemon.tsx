@@ -8,6 +8,7 @@ import { Link as HeadLink, Title } from "react-head";
 import { TypeIcon } from "../TypeIcon";
 import { Container, Paper as Paper_ } from "../Layout/Paper";
 import { capitalize } from "../../service/format";
+import { HeightChart } from "../HeightChart";
 
 export const Page = ({
   pokemon,
@@ -48,6 +49,8 @@ export const Page = ({
                 <Link href={`/pokemon/${ancestor.id}`}>{ancestor.name}</Link>
               </p>
             )}
+
+            <HeightChart pokemon={pokemon} />
 
             <p data-nosnippet>height: {pokemon.height}</p>
             <p data-nosnippet>weight: {pokemon.weight}</p>
