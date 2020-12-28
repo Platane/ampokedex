@@ -57,7 +57,7 @@
   "scripts": {
     "type": "tsc --noEmit",
     "lint": "prettier -c '**/*.{ts,tsx,js,jsx,json,md}' '!{build,.cache}/**'",
-    "build": "ts-node builder/pages.tsx && ts-node builder/app.tsx && ts-node builder/manifest.ts && cp node_modules/pokemon-font/fonts/pokemon-font.* build/",
+    "build": "ts-node builder/pages.tsx && ts-node builder/app.tsx && ts-node builder/manifest.ts && cp node_modules/pokemon-font/fonts/pokemon-font.* public/* build/",
     "serve": "serve build"
   }
 }
