@@ -7,6 +7,7 @@ import { generateColor } from "../_theme";
 import { Link as HeadLink, Title } from "react-head";
 import { TypeIcon } from "../TypeIcon";
 import { Container, Paper as Paper_ } from "../Layout/Paper";
+import { capitalize } from "../../service/format";
 
 export const Page = ({
   pokemon,
@@ -19,14 +20,14 @@ export const Page = ({
 
   return (
     <>
-      <Title>ampokedex | {pokemon.name}</Title>
+      <Title>{capitalize(pokemon.name)} | ampokedex</Title>
       <HeadLink rel="icon" type="image/png" href={pokemon.imageUrl!} />
       <Container>
         <Paper>
           <HeroImage
             data-layout-target={pokemon.name}
             layout="fixed-height"
-            alt={`${pokemon.name} sprite`}
+            alt={`${capitalize(pokemon.name)} sprite`}
             specName="default"
             // width={500}
             height={340}
@@ -37,20 +38,20 @@ export const Page = ({
             attribution="Pokémon and Pokémon character names are trademarks of Nintendo."
           />
           <Content>
-            <Name>{pokemon.name}</Name>
+            <Name>{capitalize(pokemon.name)}</Name>
             <Genus>{pokemon.genus}</Genus>
             <FlavorText>{pokemon.flavorText}</FlavorText>
 
             {ancestor && (
               <p>
-                evolves from{" "}
+                Evolves from{" "}
                 <Link href={`/pokemon/${ancestor.id}`}>{ancestor.name}</Link>
               </p>
             )}
 
-            <p>height: {pokemon.height}</p>
-            <p>weight: {pokemon.weight}</p>
-            <p>
+            <p data-nosnippet>height: {pokemon.height}</p>
+            <p data-nosnippet>weight: {pokemon.weight}</p>
+            <p data-nosnippet>
               types:
               {pokemon.types.map((type) => (
                 <TypeItem key={type} href={`/type/${type}`}>

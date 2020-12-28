@@ -6,7 +6,7 @@ import { Container, Paper } from "../Layout/Paper";
 export const Page = () => (
   <Container>
     <Paper>
-      <h1>
+      <h1 data-nosnippet>
         <FixedSizeImage
           specName="default"
           width={30}

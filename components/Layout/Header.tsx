@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "../Link";
 
 export const Header = (props: any) => (
-  <Container data-static-content {...props}>
+  <Container data-static-content data-nosnippet {...props}>
     <Link href="/">pokemons</Link>
 
     {"  "}

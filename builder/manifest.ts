@@ -57,7 +57,7 @@ const generateSizeVariant = async (
     description: meta.description,
     icons: (await generateSizeVariant(meta.logoUrl)).map(
       ({ size, filename }) => ({
-        src: filename,
+        src: meta.baseUrl + "/" + filename,
         type: "image/png",
         sizes: `${size}x${size}`,
         purpose: "any maskable",
@@ -79,7 +79,7 @@ const generateSizeVariant = async (
             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
           )
         ).map(({ size, filename }) => ({
-          src: path.join(meta.baseUrl, filename),
+          src: meta.baseUrl + "/" + filename,
           type: "image/png",
           sizes: `${size}x${size}`,
           purpose: "any maskable",

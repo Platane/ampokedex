@@ -4,8 +4,7 @@ import { HeadProvider } from "react-head";
 import { Provider as LinkProvider } from "../../components/Link";
 import { ampBoilerPlate } from "./ampBoilerPlate";
 import { sortHeadTags, formatHeadTags } from "./headTagsUtils";
-
-import { CacheProvider, Global } from "@emotion/react";
+import { CacheProvider } from "@emotion/react";
 import createEmotionServer from "@emotion/server/create-instance";
 import createCache from "@emotion/cache";
 import { createFontFace } from "../../components/fontFace";

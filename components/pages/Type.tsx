@@ -17,7 +17,7 @@ export const Page = ({
   const gemImageUrl = `https://github.com/PokeAPI/sprites/raw/master/sprites/items/${type}-gem.png`;
   return (
     <>
-      <HeadTitle>ampokedex | {type} pokemons</HeadTitle>
+      <HeadTitle>{type} pokemons | ampokedex</HeadTitle>
       <HeadLink rel="icon" type="image/png" href={gemImageUrl} />
       <div>
         <Title>
