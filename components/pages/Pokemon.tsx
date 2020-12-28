@@ -25,9 +25,10 @@ export const Page = ({
         <Paper>
           <HeroImage
             data-layout-target={pokemon.name}
+            layout="fixed-height"
             alt={`${pokemon.name} sprite`}
             specName="default"
-            width={500}
+            // width={500}
             height={340}
             src={pokemon.imageUrl}
             style={{
@@ -42,7 +43,7 @@ export const Page = ({
 
             {ancestor && (
               <p>
-                <span>evolves from </span>
+                evolves from{" "}
                 <Link href={`/pokemon/${ancestor.id}`}>{ancestor.name}</Link>
               </p>
             )}
@@ -52,13 +53,9 @@ export const Page = ({
             <p>
               types:
               {pokemon.types.map((type) => (
-                <Link
-                  key={type}
-                  href={`/type/${type}`}
-                  style={{ display: "flex", alignItems: "center" }}
-                >
+                <TypeItem key={type} href={`/type/${type}`}>
                   <TypeIcon type={type} /> <span>{type}</span>
-                </Link>
+                </TypeItem>
               ))}
             </p>
           </Content>
@@ -74,8 +71,12 @@ const Genus = styled.p`
 `;
 const FlavorText = styled.p``;
 
-const HeroImage = styled(Image)`
-  width: 100% !important;
+const HeroImage = styled(Image)``;
+
+const TypeItem = styled(Link)`
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
 `;
 
 const Content = styled.div`

@@ -3,7 +3,8 @@ import React from "react";
 
 export const Footer = (props: any) => (
   <Container data-static-content {...props}>
-    <Legal />
+    Pokémon and Pokémon character names are trademarks of{" "}
+    <a href="https://www.pokemon.com/us/legal/">Nintendo</a>.
   </Container>
 );
 
@@ -12,10 +13,3 @@ const Container = styled.div`
   padding: 40px 6px 6px 6px;
   font-size: 9px;
 `;
-
-const Legal = () => (
-  <span>
-    Pokémon and Pokémon character names are trademarks of{" "}
-    <a href="https://www.pokemon.com/us/legal/">Nintendo</a>.
-  </span>
-);

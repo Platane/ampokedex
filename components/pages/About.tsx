@@ -22,18 +22,14 @@ export const Page = () => (
       </p>
 
       <p>
-        It uses{" "}
-        <a href="https://pokeapi.co/" target="_blank">
-          pokeapi.co
-        </a>{" "}
-        as source of data. Many thanks to the team for maintaining this API.
+        It uses <a href="https://pokeapi.co/">pokeapi.co</a> as source of data.
+        Many thanks to the team for maintaining this API.
       </p>
 
       <p>
         Be sure to visit{" "}
         <a
           href="https://github.com/platane/ampokedex"
-          target="_blank"
           style={{ wordBreak: "break-all" }}
         >
           github.com/platane/ampokedex

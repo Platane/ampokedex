@@ -40,7 +40,11 @@ export const Page = ({
   </Container>
 );
 
-const Label = styled(Link)``;
+const Label = styled(Link)`
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+`;
 
 const Section = styled.div`
   margin: 20px 0;
