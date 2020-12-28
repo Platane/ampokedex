@@ -2,6 +2,7 @@ import ParkMiller from "park-miller";
 import { Color } from "../builder/pokeapi/types";
 
 export const backgroundColor = "#f5f5f5";
+export const themeColor = "orange";
 
 const standardColors = {
   blue: ["#ddf3f5", "#abc2e8", "#b0deff", "#bfcfff"],

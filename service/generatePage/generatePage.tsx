@@ -9,6 +9,8 @@ import { CacheProvider, Global } from "@emotion/react";
 import createEmotionServer from "@emotion/server/create-instance";
 import createCache from "@emotion/cache";
 import { createFontFace } from "../../components/fontFace";
+import { themeColor } from "../../components/_theme";
+import { logoUrl } from "../package";
 
 export const generatePage = ({
   body,
@@ -47,6 +49,9 @@ export const generatePage = ({
     />,
     <meta charSet="utf-8" />,
     <meta name="viewport" content="width=device-width, initial-scale=1" />,
+    <link rel="manifest" href={baseUrl + "/manifest.webmanifest"} />,
+    <link rel="apple-touch-icon" href={logoUrl} />,
+    <meta name="theme-color" content={themeColor} />,
   ]);
 
   return (
