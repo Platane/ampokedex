@@ -31,7 +31,7 @@ export const Page = ({
                 <Card key={pokemon.id} pokemon={pokemon} />
               ))}
               <Ellipsis href={`/type/${type}`}>
-                {pokemons.length - n} more <br /> …
+                {Math.max(0, pokemons.length - n)} more <br /> …
               </Ellipsis>
             </List>
           </Section>
