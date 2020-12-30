@@ -4,6 +4,9 @@ import * as path from "path";
 import * as fs from "fs";
 import { getArrayBuffer } from "../pokeapi/cached-fetch";
 import { promisify } from "util";
+import { execFile } from "child_process";
+// @ts-ignore
+import cwebp from "cwebp-bin";
 
 const getBox = (img: Jimp) => {
   let minX = Infinity;
@@ -35,13 +38,45 @@ const cut = <T>(arr: T[], n: number) =>
     arr.slice(i * n, (i + 1) * n)
   );
 
+type Sources = { src: string; type: "image/png" | "image/webm" }[];
 type ImageSpec = {
   sheet: {
     box: { x: number; y: number; width: number; height: number };
-    src: string;
+    sources: Sources;
     border: { top: number; left: number; right: number; bottom: number };
   };
-  src: string;
+  source: Sources;
+};
+
+const writeImage = async (img: Jimp, dir: string, prefix = "") => {
+  const pngBuffer = await img.getBufferAsync("image/png");
+  const pngHash = crypto
+    .createHash("md5")
+    .update(pngBuffer)
+    .digest("base64")
+    .replace(/\W/g, "")
+    .slice(0, 16);
+
+  const pngFilename = path.join(dir, pngHash + ".png");
+
+  await promisify(fs.writeFile)(pngFilename, pngBuffer);
+
+  await promisify(execFile)(cwebp, [
+    pngFilename,
+    "-o",
+    pngFilename.replace(".png", ".webp"),
+  ]);
+
+  return [
+    {
+      type: "image/png",
+      src: prefix + pngHash + ".png",
+    },
+    {
+      type: "image/webm",
+      src: prefix + pngHash + ".webp",
+    },
+  ];
 };
 
 export const generateSpriteSheet = async (
@@ -70,22 +105,25 @@ export const generateSpriteSheet = async (
         bottom: originalBox.height - (cropBox.height + cropBox.y),
       };
 
-      const buffer = await img.getBufferAsync("image/png");
-      const hash = crypto.createHash("md5").update(buffer).digest("base64");
-      const filename = hash.replace(/\W/g, "").slice(0, 16) + ".png";
-
-      await promisify(fs.writeFile)(path.join(dir, filename), buffer);
+      const sources = await writeImage(img, dir, prefix);
 
       await img.crop(cropBox.x, cropBox.y, cropBox.width, cropBox.height);
 
-      return { img, src: prefix + filename, border, imageUrl };
+      return { img, sources, border, imageUrl };
     })
   );
+
+  const w = 512;
+  const averageArea =
+    sprites.reduce((s, { img }) => s + img.getHeight() * img.getWidth(), 0) /
+    sprites.length;
+  const n = Math.floor(((w * w) / averageArea) * 0.9);
+  console.log(n);
 
   return Object.fromEntries(
     (
       await Promise.all(
-        cut(sprites, 50).map(async (sprites) => {
+        cut(sprites, n).map(async (sprites) => {
           sprites.sort((a, b) => b.img.getHeight() - a.img.getHeight());
 
           const w = 512;
@@ -136,14 +174,10 @@ export const generateSpriteSheet = async (
 
           composed.autocrop();
 
-          const buffer = await composed.getBufferAsync("image/png");
-          const hash = crypto.createHash("md5").update(buffer).digest("base64");
-          const filename = hash.replace(/\W/g, "").slice(0, 16) + ".png";
-
-          await promisify(fs.writeFile)(path.join(dir, filename), buffer);
+          const sources = writeImage(composed, dir, prefix);
 
           set.forEach((s) => {
-            s.sheet.src = prefix + filename;
+            s.sheet.sources = sources;
           });
 
           return set;
