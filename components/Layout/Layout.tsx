@@ -12,7 +12,8 @@ export const Layout = ({ children }: { children: any }) => (
     <Title>{name}</Title>
     <Meta name="description" content={description} />
     <Link rel="icon" type="image/png" href={useImageSrc(logoUrl)} />
-    <link rel="apple-touch-icon" href={useImageSrc(logoUrl)} />,
+    <Link rel="apple-touch-icon" href={useImageSrc(logoUrl)} />
+
     <Global
       styles={{
         html: {
