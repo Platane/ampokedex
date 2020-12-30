@@ -8,6 +8,7 @@ import { Link as HeadLink, Title } from "react-head";
 import { TypeIcon } from "../TypeIcon";
 import { Container, Paper as Paper_ } from "../Layout/Paper";
 import { capitalize } from "../../service/format";
+import { useImageSrc } from "../imageSpec";
 
 export const Page = ({
   pokemon,
@@ -21,7 +22,11 @@ export const Page = ({
   return (
     <>
       <Title>{capitalize(pokemon.name)} | ampokedex</Title>
-      <HeadLink rel="icon" type="image/png" href={pokemon.imageUrl!} />
+      <HeadLink
+        rel="icon"
+        type="image/png"
+        href={useImageSrc(pokemon.imageUrl!)}
+      />
       <Container>
         <Paper>
           <HeroImage

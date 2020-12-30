@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
-import { AmpImg } from "react-amphtml";
+import React from "react";
+import { AmpImg, AmpImgProps } from "react-amphtml";
+import { useImageSources, useImageSpriteSpec } from "./imageSpec";
 
 export const Image = styled(AmpImg)`
   > img {
@@ -14,3 +16,11 @@ export const FixedSizeImage = styled(Image)`
   width: ${({ width }) => width + "px"};
   height: ${({ height }) => height + "px"};
 `;
+
+type Props = AmpImgProps;
+export const Sprite = ({ src, ...props }: Props) => {
+  const sheet = useImageSpriteSpec(src);
+  const sources = useImageSources(src);
+
+  return <Image {...props} src={sources[0].src} />;
+};

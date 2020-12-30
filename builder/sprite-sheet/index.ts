@@ -38,14 +38,14 @@ const cut = <T>(arr: T[], n: number) =>
     arr.slice(i * n, (i + 1) * n)
   );
 
-type Sources = { src: string; type: "image/png" | "image/webm" }[];
-type ImageSpec = {
+export type Sources = { src: string; type: "image/png" | "image/webm" }[];
+export type ImageSpec = {
   sheet: {
     box: { x: number; y: number; width: number; height: number };
     sources: Sources;
-    border: { top: number; left: number; right: number; bottom: number };
   };
-  source: Sources;
+  border: { top: number; left: number; right: number; bottom: number };
+  sources: Sources;
 };
 
 const writeImage = async (img: Jimp, dir: string, prefix = "") => {
@@ -69,21 +69,22 @@ const writeImage = async (img: Jimp, dir: string, prefix = "") => {
 
   return [
     {
-      type: "image/png",
-      src: prefix + pngHash + ".png",
-    },
-    {
       type: "image/webm",
       src: prefix + pngHash + ".webp",
+    },
+    {
+      type: "image/png",
+      src: prefix + pngHash + ".png",
     },
   ];
 };
 
+export type ImageSpecs = Record<string, ImageSpec>;
 export const generateSpriteSheet = async (
   imageUrls: string[],
   dir: string,
   prefix = ""
-): Promise<Record<string, ImageSpec>> => {
+): Promise<ImageSpecs> => {
   fs.mkdirSync(dir, { recursive: true });
 
   const sprites = await Promise.all(
@@ -118,7 +119,6 @@ export const generateSpriteSheet = async (
     sprites.reduce((s, { img }) => s + img.getHeight() * img.getWidth(), 0) /
     sprites.length;
   const n = Math.floor(((w * w) / averageArea) * 0.9);
-  console.log(n);
 
   return Object.fromEntries(
     (
@@ -152,12 +152,11 @@ export const generateSpriteSheet = async (
               i = 0;
             }
 
-            const [{ img, border, ...rest }] = sprites.splice(i, 1);
+            const [{ img, ...rest }] = sprites.splice(i, 1);
 
             set.push({
               ...rest,
               sheet: {
-                border,
                 box: {
                   x,
                   y,
@@ -174,7 +173,7 @@ export const generateSpriteSheet = async (
 
           composed.autocrop();
 
-          const sources = writeImage(composed, dir, prefix);
+          const sources = await writeImage(composed, dir, prefix);
 
           set.forEach((s) => {
             s.sheet.sources = sources;

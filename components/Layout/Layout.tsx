@@ -1,20 +1,18 @@
-import { css } from "@emotion/css";
 import { Global } from "@emotion/react";
 import React from "react";
 import { Link, Meta, Title } from "react-head";
 import { description, logoUrl, name } from "../../service/package";
-import { BaseUrlConsumer } from "../Link";
 import { backgroundColor } from "../../components/_theme";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { createFontFace } from "../fontFace";
+import { useImageSrc } from "../imageSpec";
 
 export const Layout = ({ children }: { children: any }) => (
   <>
     <Title>{name}</Title>
-    <Link rel="icon" type="image/png" href={logoUrl} />
     <Meta name="description" content={description} />
-
+    <Link rel="icon" type="image/png" href={useImageSrc(logoUrl)} />
+    <link rel="apple-touch-icon" href={useImageSrc(logoUrl)} />,
     <Global
       styles={{
         html: {
@@ -33,7 +31,6 @@ export const Layout = ({ children }: { children: any }) => (
         },
       }}
     />
-
     <Header />
     {children}
     <Footer />

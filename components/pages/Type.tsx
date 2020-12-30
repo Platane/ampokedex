@@ -6,6 +6,7 @@ import { Link as HeadLink, Title as HeadTitle } from "react-head";
 import styled from "@emotion/styled";
 import { TypeIcon } from "../TypeIcon";
 import { List } from "./Index";
+import { useImageSrc } from "../imageSpec";
 
 export const Page = ({
   pokemons,
@@ -18,7 +19,7 @@ export const Page = ({
   return (
     <>
       <HeadTitle>{type} pokemons | ampokedex</HeadTitle>
-      <HeadLink rel="icon" type="image/png" href={gemImageUrl} />
+      <HeadLink rel="icon" type="image/png" href={useImageSrc(gemImageUrl)} />
       <div>
         <Title>
           <TypeIcon type={type} size={60} />

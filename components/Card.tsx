@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import type { Pokemon } from "../builder/pokeapi";
 import { capitalize } from "../service/format";
-import { FixedSizeImage } from "./Image";
+import { FixedSizeImage, Sprite } from "./Image";
 import { Link } from "./Link";
 import { generateColor } from "./_theme";
 
@@ -13,7 +13,7 @@ export const Card = ({ pokemon }: { pokemon: Pokemon }) => {
       href={`/pokemon/${pokemon.id}`}
       style={{ backgroundColor: color }}
     >
-      <FixedSizeImage
+      <Sprite
         data-layout-source={pokemon.name}
         alt={`${pokemon.name} sprite`}
         data-nosnippet

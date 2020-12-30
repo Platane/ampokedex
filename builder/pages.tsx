@@ -18,6 +18,7 @@ import { Page as PageType } from "../components/pages/Type";
 import { Layout } from "../components/Layout/Layout";
 import { generateSpriteSheet } from "./sprite-sheet";
 import { getGemImageUrl } from "../components/TypeIcon";
+import { Provider as ImageSpecProvider } from "../components/imageSpec";
 
 const ampOptimizer = AmpOptimizer.create();
 
@@ -48,12 +49,12 @@ const outDir = path.join(__dirname, "../build");
   // process the images
   const imageSpecs = await generateSpriteSheet(
     [
-      ...(pokemons.map((p) => p.imageUrl).filter(Boolean) as any),
-      ...Object.keys(pokemonByType).map(getGemImageUrl as any),
       logoUrl,
+      ...Object.keys(pokemonByType).map(getGemImageUrl as any),
+      ...(pokemons.map((p) => p.imageUrl).filter(Boolean) as any),
     ],
     path.join(outDir, "images"),
-    baseUrl + "/image/"
+    baseUrl + "/images/"
   );
 
   //
@@ -94,16 +95,18 @@ const outDir = path.join(__dirname, "../build");
     const element = (
       <>
         <Link rel="canonical" href={canonical} />
-        <Layout>
-          {React.createElement(component as any, {
-            imageSpecs,
-            pokemonById,
-            pokemonByColor,
-            pokemonByType,
-            pokemons,
-            ...props,
-          })}
-        </Layout>
+        <ImageSpecProvider value={imageSpecs}>
+          <Layout>
+            {React.createElement(component as any, {
+              imageSpecs,
+              pokemonById,
+              pokemonByColor,
+              pokemonByType,
+              pokemons,
+              ...props,
+            })}
+          </Layout>
+        </ImageSpecProvider>
         <AmpInstallServiceworker
           src={baseUrl + "/service-worker.js"}
           // @ts-ignore
