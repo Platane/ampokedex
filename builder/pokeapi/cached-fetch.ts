@@ -8,7 +8,7 @@ fs.mkdirSync(cacheDir, { recursive: true });
 
 const limit = pLimit(1);
 
-const get = async (url: string) => {
+export const getJson = async (url: string) => {
   const cacheFilename = path.join(
     cacheDir,
     url.replace("https://", "").replace(/\W/g, "-") + ".json"
@@ -28,7 +28,21 @@ const get = async (url: string) => {
   );
 };
 
+export const getArrayBuffer = async (url: string) => {
+  const cacheFilename = path.join(
+    cacheDir,
+    url.replace("https://", "").replace(/\W/g, "-")
+  );
+
+  if (fs.existsSync(cacheFilename)) return fs.readFileSync(cacheFilename);
+
+  return fetch(url)
+    .then((res) => res.arrayBuffer())
+    .then((x) => {
+      fs.writeFileSync(cacheFilename, Buffer.from(x));
+      return x;
+    });
+};
+
 const wait = (delay = 0) =>
   new Promise((resolve) => setTimeout(resolve, delay));
-
-export default get;

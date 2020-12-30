@@ -16,6 +16,7 @@ import { Page as PageAbout } from "../components/pages/About";
 import { Page as PageTypes } from "../components/pages/Types";
 import { Page as PageType } from "../components/pages/Type";
 import { Layout } from "../components/Layout/Layout";
+import { generateSpriteSheet } from "./sprite-sheet";
 
 const ampOptimizer = AmpOptimizer.create();
 
@@ -23,6 +24,12 @@ const outDir = path.join(__dirname, "../build");
 
 (async () => {
   const pokemons = await getAll();
+
+  const imageSpecs = await generateSpriteSheet(
+    pokemons.map((p) => p.imageUrl).filter(Boolean) as any,
+    path.join(outDir, "images"),
+    baseUrl + "/image/"
+  );
 
   const pokemonByHabitat: Record<string, Pokemon[]> = {} as any;
   const pokemonByColor: Record<Color, Pokemon[]> = {} as any;
@@ -83,6 +90,7 @@ const outDir = path.join(__dirname, "../build");
         <Link rel="canonical" href={canonical} />
         <Layout>
           {React.createElement(component as any, {
+            imageSpecs,
             pokemonById,
             pokemonByColor,
             pokemonByType,

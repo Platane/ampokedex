@@ -1,12 +1,12 @@
 import slugify from "slugify";
-import get from "./cached-fetch";
+import { getJson } from "./cached-fetch";
 import type { PokemonVariety, PokemonSpecie } from "./types";
 
 const getPokemonVarietyById = (id: string | number): Promise<PokemonVariety> =>
-  get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  getJson(`https://pokeapi.co/api/v2/pokemon/${id}`);
 
 const getPokemonSpecieById = (id: string | number): Promise<PokemonSpecie> =>
-  get(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
+  getJson(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
 
 export const getAll = () =>
   Promise.all(
