@@ -72,7 +72,7 @@ const duration = 260;
 
         document.body.appendChild(floatingContainer);
 
-        const h = floatingContainer.offsetHeight * 1.2;
+        const h = 500;
 
         img1.style.opacity = "1";
         img1.style.transform = `translate(${h}px,${h}px) rotate(80deg)`;
@@ -103,8 +103,7 @@ const duration = 260;
       onLoad2 = () => {
         if (currentUrl !== url) return;
 
-        const h =
-          (floatingContainer.offsetWidth + floatingContainer.offsetHeight) / 2;
+        const h = 500;
 
         img2.style.opacity = "1";
         img2
