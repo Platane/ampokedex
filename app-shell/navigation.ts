@@ -82,7 +82,25 @@ const init = () => {
       // swallow aborted errors
       if (err.message === "aborted" || err.message === "Request aborted")
         return;
-      throw err;
+
+      console.error(err);
+
+      const errorPage = document.createElement("div");
+      emptyDomElement(container);
+      container.appendChild(errorPage);
+
+      switch (err.message) {
+        case "Network failure":
+          errorPage.innerHTML =
+            "<h1>⛔️ Error</h1><span>⚡ It seems like you are offline</span>";
+          break;
+
+        default:
+          errorPage.innerHTML =
+            "<h1>⛔️ Error</h1><span>😐 Something unexpectedly wrong happened";
+
+          break;
+      }
     }
   };
 

@@ -18,7 +18,6 @@ export const fetchDocument = (url: string) => {
         }
         if (xhr.status === 0) {
           xhr.onreadystatechange = null;
-          reject(new Error(`Request aborted`));
           return;
         }
         if (xhr.status < 100 || xhr.status > 599) {
