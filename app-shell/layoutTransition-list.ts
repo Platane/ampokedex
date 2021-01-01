@@ -103,4 +103,5 @@ import {
   });
 
   events.on("pageTransition:aborted", cancel);
+  events.on("pageTransition:error", cancel);
 }

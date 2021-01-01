@@ -135,4 +135,5 @@ const duration = 260;
   });
 
   events.on("pageTransition:aborted", cancel);
+  events.on("pageTransition:error", cancel);
 }

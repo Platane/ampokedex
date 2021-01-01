@@ -43,4 +43,5 @@ import { events } from "./navigation";
   };
   events.on("pageTransition:ended", end);
   events.on("pageTransition:aborted", end);
+  events.on("pageTransition:error", end);
 }

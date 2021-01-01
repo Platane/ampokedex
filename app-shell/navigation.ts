@@ -101,6 +101,8 @@ const init = () => {
 
           break;
       }
+
+      events.emit("pageTransition:error", url);
     }
   };
 
