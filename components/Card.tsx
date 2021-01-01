@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import type { Pokemon } from "../builder/pokeapi";
 import { capitalize } from "../service/format";
-import { FixedSizeImage, Sprite } from "./Image";
+import { Image } from "./Image";
 import { Link } from "./Link";
 import { generateColor } from "./_theme";
 
@@ -13,7 +13,7 @@ export const Card = ({ pokemon }: { pokemon: Pokemon }) => {
       href={`/pokemon/${pokemon.id}`}
       style={{ backgroundColor: color }}
     >
-      <Sprite
+      <Image
         data-layout-source={pokemon.name}
         alt={`${pokemon.name} sprite`}
         data-nosnippet
@@ -23,6 +23,7 @@ export const Card = ({ pokemon }: { pokemon: Pokemon }) => {
         src={pokemon.imageUrl}
         style={{ backgroundColor: color }}
         attribution="Pokémon and Pokémon character names are trademarks of Nintendo."
+        layout="fixed"
       />
       <Title light={pokemon.color === "black"}>
         {capitalize(pokemon.name)}

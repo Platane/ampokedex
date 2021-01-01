@@ -1,6 +1,6 @@
 import React from "react";
 import { PokemonType } from "../builder/pokeapi/types";
-import { FixedSizeImage } from "./Image";
+import { Image } from "./Image";
 
 export const getGemImageUrl = (type: PokemonType) =>
   `https://github.com/PokeAPI/sprites/raw/master/sprites/items/${type}-gem.png`;
@@ -13,7 +13,7 @@ export const TypeIcon = ({
   type: PokemonType;
   size?: 30 | 60 | 90;
 }) => (
-  <FixedSizeImage
+  <Image
     {...props}
     specName="default"
     width={size}

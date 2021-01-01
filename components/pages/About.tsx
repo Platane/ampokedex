@@ -1,13 +1,13 @@
 import React from "react";
 import { logoUrl } from "../../service/package";
-import { FixedSizeImage } from "../Image";
+import { Image } from "../Image";
 import { Container, Paper } from "../Layout/Paper";
 
 export const Page = () => (
   <Container>
     <Paper>
       <h1 data-nosnippet>
-        <FixedSizeImage
+        <Image
           specName="default"
           width={30}
           height={30}
