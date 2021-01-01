@@ -45,3 +45,13 @@ export const getAbsoluteBoundingBox = (element: Element) => {
 };
 
 export const wait = (delay = 0) => new Promise((r) => setTimeout(r, delay));
+
+export const waitForAmpImage = async (ampImage: HTMLElement) => {
+  let i = getImage(ampImage);
+
+  while (!(i = getImage(ampImage))) await wait(30);
+
+  if (i.naturalWidth) return i;
+
+  return new Promise((r) => i!.addEventListener("load", r));
+};

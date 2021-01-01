@@ -3,6 +3,7 @@ import {
   applyBoxTransform,
   documentsQuerySelector,
   getAbsoluteBoundingBox,
+  waitForAmpImage,
 } from "./utils";
 
 const duration = 260;
@@ -126,7 +127,13 @@ const duration = 260;
             ],
             duration
           )
-          .addEventListener("finish", cancel);
+          .addEventListener("finish", async () => {
+            await waitForAmpImage(target);
+
+            if (currentUrl !== url) return;
+
+            cancel();
+          });
       };
 
       if (img2.naturalWidth) onLoad2();
