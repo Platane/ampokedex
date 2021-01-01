@@ -114,7 +114,9 @@ import {
 const waitForAmpImage = async (ampImage: HTMLElement) => {
   let i = getImage(ampImage);
 
-  while (!(i = getImage(ampImage))) await wait(100);
+  while (!(i = getImage(ampImage))) await wait(30);
 
-  return i;
+  if (i.naturalWidth) return i;
+
+  return new Promise((r) => i!.addEventListener("load", r));
 };
