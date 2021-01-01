@@ -5,7 +5,8 @@ import {
   Box,
   getImage,
   getAbsoluteBoundingBox,
-  wait,
+  waitForAmpImage,
+  getAmpImageSource,
 } from "./utils";
 
 {
@@ -50,15 +51,14 @@ import {
     const el = anchorElement.querySelector(
       "[data-layout-source]"
     ) as HTMLElement;
-    const img = getImage(el);
 
-    if (img && url.match(/\/pokemon\//)) {
+    if (el && url.match(/\/pokemon\//)) {
       currentTransition = {
         targetUrl: url,
         boxStart: getAbsoluteBoundingBox(el),
-        src: img.src,
+        src: getAmpImageSource(el),
       };
-      floatingImage.src = img.src;
+      floatingImage.src = currentTransition.src;
       floatingImage.style.backgroundColor = el.style.backgroundColor;
       document.body.appendChild(floatingImage);
     }
@@ -110,13 +110,3 @@ import {
   events.on("pageTransition:aborted", cancel);
   events.on("pageTransition:error", cancel);
 }
-
-const waitForAmpImage = async (ampImage: HTMLElement) => {
-  let i = getImage(ampImage);
-
-  while (!(i = getImage(ampImage))) await wait(30);
-
-  if (i.naturalWidth) return i;
-
-  return new Promise((r) => i!.addEventListener("load", r));
-};

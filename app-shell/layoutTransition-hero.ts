@@ -3,6 +3,7 @@ import {
   applyBoxTransform,
   documentsQuerySelector,
   getAbsoluteBoundingBox,
+  getAmpImageSource,
   waitForAmpImage,
 } from "./utils";
 
@@ -62,7 +63,7 @@ const duration = 260;
       const box = getAbsoluteBoundingBox(target);
       applyBoxTransform(floatingContainer, box);
 
-      img1.src = target.getAttribute("src")!;
+      img1.src = getAmpImageSource(target);
 
       floatingContainer.style.backgroundColor = target.style.backgroundColor;
 
@@ -97,7 +98,7 @@ const duration = 260;
     const target = documentsQuerySelector("[data-layout-target]");
 
     if (target) {
-      img2.src = target.getAttribute("src")!;
+      img2.src = getAmpImageSource(target);
 
       floatingContainer.style.backgroundColor = target.style.backgroundColor;
 

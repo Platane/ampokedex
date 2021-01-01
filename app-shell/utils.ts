@@ -55,3 +55,21 @@ export const waitForAmpImage = async (ampImage: HTMLElement) => {
 
   return new Promise((r) => i!.addEventListener("load", r));
 };
+
+// from https://stackoverflow.com/questions/5573096/detecting-webp-support
+export const supportWebP = document
+  .createElement("canvas")
+  .toDataURL("image/webp")
+  .includes("data:image/webp");
+
+export const getAmpImageSource = (ampImage: HTMLElement) => {
+  const sources = [
+    ampImage?.getAttribute?.("src"),
+    ...[...ampImage.querySelectorAll("[src]")].map((el: any) =>
+      el.getAttribute("src")
+    ),
+  ].filter(Boolean);
+
+  if (!supportWebP) sources.find((a) => !a.endsWith(".webp"));
+  return sources[0];
+};
