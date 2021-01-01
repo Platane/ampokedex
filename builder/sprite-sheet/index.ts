@@ -63,6 +63,9 @@ const writeImage = async (img: Jimp, dir: string, prefix = "") => {
 
   await promisify(execFile)(cwebp, [
     pngFilename,
+    "-lossless",
+    // "-q",
+    // "100",
     "-o",
     pngFilename.replace(".png", ".webp"),
   ]);
