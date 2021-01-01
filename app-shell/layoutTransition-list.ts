@@ -5,6 +5,7 @@ import {
   Box,
   getImage,
   getAbsoluteBoundingBox,
+  wait,
 } from "./utils";
 
 {
@@ -83,7 +84,11 @@ import {
 
         target.style.opacity = "0.1";
 
-        onTransitionEnd = () => {
+        onTransitionEnd = async () => {
+          await waitForAmpImage(target);
+
+          if (currentTransition?.targetUrl !== url) return;
+
           cancel();
           target.style.opacity = "1";
         };
@@ -105,3 +110,11 @@ import {
   events.on("pageTransition:aborted", cancel);
   events.on("pageTransition:error", cancel);
 }
+
+const waitForAmpImage = async (ampImage: HTMLElement) => {
+  let i = getImage(ampImage);
+
+  while (!(i = getImage(ampImage))) await wait(100);
+
+  return i;
+};
