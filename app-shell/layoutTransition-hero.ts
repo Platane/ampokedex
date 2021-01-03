@@ -59,7 +59,7 @@ const duration = 260;
 
     const target = documentsQuerySelector("[data-layout-target]");
 
-    if (target && url.startsWith("/pokemon/")) {
+    if (target && url.match(/\/pokemon\/[^/]+$/)) {
       const box = getAbsoluteBoundingBox(target);
       applyBoxTransform(floatingContainer, box);
 
