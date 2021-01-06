@@ -1,3 +1,4 @@
+import { themeColor } from "../components/_theme";
 import { events } from "./navigation";
 
 {
@@ -6,9 +7,10 @@ import { events } from "./navigation";
   topProgressBar.style.left = "0";
   topProgressBar.style.top = "0";
   topProgressBar.style.height = "4px";
-  topProgressBar.style.backgroundColor = "orange";
+  topProgressBar.style.backgroundColor = themeColor;
   topProgressBar.style.position = "fixed";
   topProgressBar.style.pointerEvents = "none";
+  topProgressBar.style.zIndex = "3";
 
   let onTransitionEnd = () => undefined as void;
 
