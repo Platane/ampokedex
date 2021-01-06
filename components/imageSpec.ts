@@ -7,7 +7,7 @@ export const useImageBorder = (imageUrl: string) =>
   useContext(ctx)[imageUrl].border;
 
 export const useImageSources = (imageUrl: string) =>
-  useContext(ctx)[imageUrl].sources;
+  useContext(ctx)[imageUrl]?.sources || [{ src: imageUrl }];
 
 export const useImageSrc = (imageUrl: string) =>
   useContext(ctx)[imageUrl]?.sources?.find?.((x) => x.type === "image/png")

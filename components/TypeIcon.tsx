@@ -18,6 +18,7 @@ export const TypeIcon = ({
     specName="default"
     width={size}
     height={size}
+    layout="fixed"
     src={getGemImageUrl(type)}
     attribution="Pokémon and Pokémon character names are trademarks of Nintendo."
     alt={`${type} gem icon`}
