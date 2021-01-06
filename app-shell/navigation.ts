@@ -86,11 +86,13 @@ const init = () => {
       console.error(err);
 
       const errorPage = document.createElement("div");
+      errorPage.style.padding = "50px 10px";
       emptyDomElement(container);
       container.appendChild(errorPage);
 
       switch (err.message) {
         case "Network failure":
+        case "Network Error":
           errorPage.innerHTML =
             "<h1>⛔️ Error</h1><span>⚡ It seems like you are offline</span>";
           break;
