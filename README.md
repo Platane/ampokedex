@@ -16,7 +16,7 @@ Featuring:
 
 - ⚡ amp pages [\*](https://search.google.com/test/amp?url=https%3A%2F%2Fplatane.github.io%2Fampokedex%2Fpokemon%2Fcharizard)[\*](https://search.google.com/test/amp?url=https%3A%2F%2Fplatane.github.io%2Fampokedex)
 - 🎠 nice page transition
-- 🚀 sweet lighthouse score [\*](https://lighthouse-dot-webdotdevsite.appspot.com//lh/html?url=https%3A%2F%2Fplatane.github.io%2Fampokedex%2Fpokemon%2Fcharizard)[\*](https://lighthouse-dot-webdotdevsite.appspot.com//lh/html?url=https%3A%2F%2Fplatane.github.io%2Fampokedex)
+- 🚀 sweet lighthouse score [\*](https://lighthouse-dot-webdotdevsite.appspot.com//lh/html?url=https%3A%2F%2Fplatane.github.io%2Fampokedex%2Fpokemon%2Fcharizard)[\*](https://lighthouse-dot-webdotdevsite.appspot.com//lh/html?url=https%3A%2F%2Fplatane.github.io%2Fampokedex%2F)
 
 # Table of Contents
 
