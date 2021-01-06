@@ -1,14 +1,13 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Link } from "../Link";
-import { Image } from "../Image";
+import { Favicon, Image } from "../Image";
 import type { Pokemon } from "../../builder/pokeapi";
 import { generateColor } from "../_theme";
-import { Link as HeadLink, Title } from "react-head";
+import { Title } from "react-head";
 import { TypeIcon } from "../TypeIcon";
 import { Container, Paper as Paper_ } from "../Layout/Paper";
 import { capitalize } from "../../service/format";
-import { useImageSrc } from "../imageSpec";
 
 export const Page = ({
   pokemon,
@@ -22,11 +21,8 @@ export const Page = ({
   return (
     <>
       <Title>{capitalize(pokemon.name)} | ampokedex</Title>
-      <HeadLink
-        rel="icon"
-        type="image/png"
-        href={useImageSrc(pokemon.imageUrl!)}
-      />
+      <Favicon src={pokemon.imageUrl!} />
+
       <Container>
         <Paper>
           <HeroImage

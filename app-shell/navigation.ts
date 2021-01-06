@@ -53,11 +53,20 @@ const init = () => {
         const title = doc.querySelector("title");
         if (title) document.title = title.innerText;
 
-        const icon = doc.querySelector('link[rel="icon"]');
-        if (icon)
+        for (const link of doc.querySelectorAll("link")) {
+          const query =
+            "link" +
+            ["type", "rel"]
+              .map((name) => {
+                const value = link.getAttribute(name);
+                return value ? `[${name}="${value}"]` : "";
+              })
+              .join("");
+
           document
-            .querySelector('link[rel="icon"]')
-            ?.setAttribute("href", icon.getAttribute("href") || "");
+            .querySelector(query)
+            ?.setAttribute?.("href", link.getAttribute("href")!);
+        }
       }
 
       // dispose of the current doc

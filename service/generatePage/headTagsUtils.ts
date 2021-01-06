@@ -5,7 +5,8 @@
  *  + sort them
  */
 export const formatHeadTags = (headTags: React.ReactElement[]) => {
-  const key = (t: any) => [t.type, t.props.rel, t.props.name].join(":");
+  const key = (t: any) =>
+    [t.type, t.props.rel, t.props.type, t.props.name].join(":");
 
   return headTags
     .reverse()
@@ -18,7 +19,7 @@ export const formatHeadTags = (headTags: React.ReactElement[]) => {
 
 export const sortHeadTags = (headTags: React.ReactElement[]) => {
   const key = (t: any) =>
-    [t.type, t.props.rel, t.props.name, t.props.src].join(":");
+    [t.type, t.props.rel, t.props.type, t.props.name, t.props.src].join(":");
 
   return headTags
     .slice()

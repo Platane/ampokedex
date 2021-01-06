@@ -57,6 +57,12 @@ const outDir = path.join(__dirname, "../build");
     baseUrl + "/images/"
   );
 
+  {
+    const filename = path.join(outDir, "imageSpecs.json");
+    fs.mkdirSync(path.dirname(filename), { recursive: true });
+    fs.writeFileSync(filename, JSON.stringify(imageSpecs));
+  }
+
   //
   const pages = [
     {

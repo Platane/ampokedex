@@ -6,13 +6,13 @@ import { backgroundColor } from "../../components/_theme";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { useImageSrc } from "../imageSpec";
+import { Favicon } from "../Image";
 
 export const Layout = ({ children }: { children: any }) => (
   <>
     <Title>{name}</Title>
     <Meta name="description" content={description} />
-    <Link rel="icon" type="image/png" href={useImageSrc(logoUrl)} />
-    <Link rel="apple-touch-icon" href={useImageSrc(logoUrl)} />
+    <Favicon src={logoUrl} />
 
     <Global
       styles={{

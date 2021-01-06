@@ -2,11 +2,11 @@ import React from "react";
 import { Card } from "../Card";
 import type { Pokemon } from "../../builder/pokeapi";
 import type { PokemonType } from "../../builder/pokeapi/types";
-import { Link as HeadLink, Title as HeadTitle } from "react-head";
+import { Title as HeadTitle } from "react-head";
 import styled from "@emotion/styled";
 import { TypeIcon } from "../TypeIcon";
 import { List } from "./Index";
-import { useImageSrc } from "../imageSpec";
+import { Favicon } from "../Image";
 
 export const Page = ({
   pokemons,
@@ -19,7 +19,8 @@ export const Page = ({
   return (
     <>
       <HeadTitle>{type} pokemons | ampokedex</HeadTitle>
-      <HeadLink rel="icon" type="image/png" href={useImageSrc(gemImageUrl)} />
+      <Favicon src={gemImageUrl} />
+
       <div>
         <Title>
           <TypeIcon type={type} size={60} />

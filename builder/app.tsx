@@ -11,6 +11,7 @@ import React from "react";
 import { generatePage } from "../service/generatePage/generatePage";
 import { baseUrl } from "../service/package";
 import { Layout } from "../components/Layout/Layout";
+import { Provider as ImageSpecProvider } from "../components/imageSpec";
 
 const outDir = path.join(__dirname, "../build");
 fs.mkdirSync(outDir, { recursive: true });
@@ -31,12 +32,18 @@ fs.mkdirSync(outDir, { recursive: true });
 
     const { output } = await bundle.generate({ format: "es" });
 
+    const imageSpecs = JSON.parse(
+      fs.readFileSync(path.join(outDir, "imageSpecs.json")).toString()
+    );
+
     const html = generatePage({
       baseUrl,
       body: (
-        <Layout>
-          <div id="root"></div>
-        </Layout>
+        <ImageSpecProvider value={imageSpecs}>
+          <Layout>
+            <div id="root"></div>
+          </Layout>
+        </ImageSpecProvider>
       ),
       headTags: [
         <script src="https://cdn.ampproject.org/shadow-v0.js" />,

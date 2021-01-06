@@ -38,7 +38,7 @@ const cut = <T>(arr: T[], n: number) =>
     arr.slice(i * n, (i + 1) * n)
   );
 
-export type Sources = { src: string; type: "image/png" | "image/webm" }[];
+export type Sources = { src: string; type: "image/png" | "image/webp" }[];
 export type ImageSpec = {
   sheet: {
     box: { x: number; y: number; width: number; height: number };
@@ -55,7 +55,7 @@ const writeImage = async (img: Jimp, dir: string, prefix = "") => {
     .update(pngBuffer)
     .digest("base64")
     .replace(/\W/g, "")
-    .slice(0, 16);
+    .slice(0, 8);
 
   const pngFilename = path.join(dir, pngHash + ".png");
 
@@ -72,7 +72,7 @@ const writeImage = async (img: Jimp, dir: string, prefix = "") => {
 
   return [
     {
-      type: "image/webm",
+      type: "image/webp",
       src: prefix + pngHash + ".webp",
     },
     {
@@ -113,7 +113,15 @@ export const generateSpriteSheet = async (
 
       await img.crop(cropBox.x, cropBox.y, cropBox.width, cropBox.height);
 
-      return { img, sources, border, imageUrl };
+      const croppedSource = await writeImage(img, dir, prefix);
+
+      return {
+        img,
+        sources,
+        border,
+        imageUrl,
+        copped: { sources: croppedSource },
+      };
     })
   );
 
