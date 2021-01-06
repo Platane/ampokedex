@@ -28,15 +28,30 @@ const Container = styled.nav`
 `;
 
 const rotate = keyframes`
-  0%{transform:rotate(0deg)}
-  100%{transform:rotate(360deg)}
+  0%{transform: translateX(10px) rotate(0deg) }
+  50%{transform: translateX(-30px) rotate(180deg) }
+  100%{transform: translateX(10px) rotate(360deg) }
 `;
 const Spinner = styled.div`
   margin-left: auto;
-  width: 16px;
-  height: 6px;
-  background-color: #aaa;
-  border-radius: 0 4px 4px 0;
-  border-top: solid 3px orange;
-  animation: ${rotate} 2000ms linear infinite;
+  width: 20px;
+  height: 4px;
+  background-color: #777;
+  border-radius: 50%;
+  border-top: solid 10px #de5a3a;
+  border-bottom: solid 6px #e1daec;
+  animation: ${rotate} 2800ms linear infinite;
+  position: relative;
+
+  &:after {
+    content: "";
+    border: solid 3px #777;
+    background-color: #eef;
+    width: 3px;
+    height: 3px;
+    left: 3px;
+    top: -2px;
+    border-radius: 50%;
+    position: absolute;
+  }
 `;
