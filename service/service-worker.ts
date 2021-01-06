@@ -46,7 +46,7 @@ registerRoute(
   ({ request }) => request.destination === "image",
 
   new CacheFirst({
-    cacheName: "image-cache",
+    cacheName: "images-cache",
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: 30 * 24 * 60 * 60,
@@ -55,6 +55,17 @@ registerRoute(
       //   statuses: [0, 200],
       // }),
     ],
+  })
+);
+
+/**
+ * cache assets
+ */
+registerRoute(
+  ({ request }) => request.destination === "font",
+
+  new CacheFirst({
+    cacheName: "assets-cache",
   })
 );
 
