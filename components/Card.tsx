@@ -48,7 +48,7 @@ const Container = styled(Link)`
 
 const Title = styled.div<{ light: boolean }>`
   text-align: center;
-  color: ${({ light }) => (light ? "#eee" : "#000")};
+  color: ${({ light }) => (light ? "#fff" : "#000")};
   font-size: 10px;
   margin-bottom: 4px;
 `;
