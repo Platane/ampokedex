@@ -8,7 +8,9 @@ export const interceptNavigation = (
 
     if (event.defaultPrevented) return;
 
-    const a = getAncestorLink(event.path ? event.path[0] : event.target);
+    const target =
+      event.path?.[0] ?? event.explicitOriginalTarget ?? event.target;
+    const a = getAncestorLink(target);
 
     if (a?.href) {
       const { origin, pathname, search, hash } = new URL(
