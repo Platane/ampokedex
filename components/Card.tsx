@@ -15,7 +15,7 @@ export const Card = ({ pokemon }: { pokemon: Pokemon }) => {
     >
       <Image
         data-layout-source={pokemon.name}
-        alt={`${pokemon.name} sprite`}
+        // alt={`${pokemon.name} sprite`}
         data-nosnippet
         specName="default"
         width={96 + 18}

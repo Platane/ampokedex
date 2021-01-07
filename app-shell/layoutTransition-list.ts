@@ -3,12 +3,13 @@ import {
   applyBoxTransform,
   documentsQuerySelector,
   Box,
-  getImage,
   getAbsoluteBoundingBox,
   waitForAmpImage,
   getAmpImageSource,
 } from "./utils";
 
+// when navigating from a page with a pokemon card to a pokemon/xxx page
+// copy the card image as floating image and enlarge it to fill the hero image in the pokemon/xxx page
 {
   const floatingImage = document.createElement("img");
   floatingImage.id = "list-transition";

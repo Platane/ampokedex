@@ -32,6 +32,10 @@ fs.mkdirSync(outDir, { recursive: true });
 
     const { output } = await bundle.generate({ format: "es" });
 
+    const appCode = output
+      .map((o) => (o.type === "chunk" ? o.code : ""))
+      .join("");
+
     const imageSpecs = JSON.parse(
       fs.readFileSync(path.join(outDir, "imageSpecs.json")).toString()
     );
@@ -47,16 +51,7 @@ fs.mkdirSync(outDir, { recursive: true });
       ),
       headTags: [
         <script src="https://cdn.ampproject.org/shadow-v0.js" />,
-        <script
-          dangerouslySetInnerHTML={{
-            __html: output
-              .map((o) => {
-                if (o.type === "chunk") return o.code;
-                return "";
-              })
-              .join(""),
-          }}
-        />,
+        <script dangerouslySetInnerHTML={{ __html: appCode }} />,
       ],
     });
 

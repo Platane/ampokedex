@@ -1,6 +1,10 @@
 import { themeColor } from "../components/_theme";
 import { events } from "./navigation";
 
+// display a progress bar on top of the screen
+// as we don't have the progress value, it's actually a fake progress, with a css animation
+// the bar appears after 120ms (we don't want to display it it the page loading is instant)
+
 {
   const topProgressBar = document.createElement("div");
   topProgressBar.style.opacity = "0";
